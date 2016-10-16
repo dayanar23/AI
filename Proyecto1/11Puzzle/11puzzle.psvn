@@ -1,0 +1,52 @@
+# PSVN file for the 11-Puzzle problem
+# the game board are 4x3 
+
+# domain of the game are 11 numbers and a blank piece
+DOMAIN 	piece 12
+		B 1 2 3 4 5 6 7 8 9 10 11  # B is the blank piece
+
+# numbers of state variables = the number of pieces
+12
+
+# all state variables have 12 possible values
+piece piece piece piece piece piece piece piece piece piece piece piece
+
+# rules 
+B X - - - - - - - - - - => X B - - - - - - - - - - LABEL 1-to-2
+B - - - X - - - - - - - => X - - - B - - - - - - - LABEL 1-to-5
+- B X - - - - - - - - - => - X B - - - - - - - - - LABEL 2-to-3
+- B - - - X - - - - - - => - X - - - B - - - - - - LABEL 2-to-6
+- - B X - - - - - - - - => - - X B - - - - - - - - LABEL 3-to-4
+- - B - - - X - - - - - => - - X - - - B - - - - - LABEL 3-to-7
+- - - B - - - X - - - - => - - - X - - - B - - - - LABEL 4-to-8
+- - - - B X - - - - - - => - - - - X B - - - - - - LABEL 5-to-6
+- - - - B - - - X - - - => - - - - X - - - B - - - LABEL 5-to-9
+- - - - - B X - - - - - => - - - - - X B - - - - - LABEL 6-to-7
+- - - - - B - - - X - - => - - - - - X - - - B - - LABEL 6-to-10
+- - - - - - B X - - - - => - - - - - - X B - - - - LABEL 7-to-8
+- - - - - - B - - - X - => - - - - - - X - - - B - LABEL 7-to-11
+- - - - - - - B - - - X => - - - - - - - X - - - B LABEL 8-to-12
+- - - - - - - - B X - - => - - - - - - - - X B - - LABEL 9-to-10
+- - - - - - - - - B X - => - - - - - - - - - X B - LABEL 10-to-11
+- - - - - - - - - - B X => - - - - - - - - - - X B LABEL 11-to-12
+X B - - - - - - - - - - => B X - - - - - - - - - - LABEL 2-to-1
+X - - - B - - - - - - - => B - - - X - - - - - - - LABEL 5-to-1
+- X B - - - - - - - - - => - B X - - - - - - - - - LABEL 3-to-2
+- X - - - B - - - - - - => - B - - - X - - - - - - LABEL 6-to-2
+- - X B - - - - - - - - => - - B X - - - - - - - - LABEL 4-to-3
+- - X - - - B - - - - - => - - B - - - X - - - - - LABEL 7-to-3
+- - - X - - - B - - - - => - - - B - - - X - - - - LABEL 8-to-4
+- - - - X B - - - - - - => - - - - B X - - - - - - LABEL 6-to-5
+- - - - X - - - B - - - => - - - - B - - - X - - - LABEL 9-to-5
+- - - - - X B - - - - - => - - - - - B X - - - - - LABEL 7-to-6
+- - - - - X - - - B - - => - - - - - B - - - X - - LABEL 10-to-7
+- - - - - - X B - - - - => - - - - - - B X - - - - LABEL 8-to-7
+- - - - - - X - - - B - => - - - - - - B - - - X - LABEL 11-to-7
+- - - - - - - X - - - B => - - - - - - - B - - - X LABEL 12-to-8
+- - - - - - - - X B - - => - - - - - - - - B X - - LABEL 10-to-9
+- - - - - - - - - X B - => - - - - - - - - - B X - LABEL 11-to-10
+- - - - - - - - - - X B => - - - - - - - - - - B X LABEL 12-to-11
+
+# goal
+
+GOAL B 1 2 3 4 5 6 7 8 9 10 11

@@ -1,61 +1,78 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <inttypes.h>
-#include <assert.h>
-#include <sys/time.h>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <time.h>
 
-#define  MAX_LINE_LENGTH 999 
+using namespace std;
 
 // FORWARD DECLARATION FOR DFS FUNCTION
 int dfs(state_t, int,int,int);
 
-// GLOBAL VARIABLE FOR THE NUMBER OF STATES
-int states = 0;
+// GLOBAL VARIABLE FOR NUMBER OF STATES 
+int states;
 
 int main(int argc, char **argv ) {
 
     // VARIABLES FOR INPUT
-    char str[MAX_LINE_LENGTH + 1];
+    ifstream in_file;
+    string line;
     ssize_t nchars; 
     state_t state; // state_t is defined by the PSVN API. It is the type used for individual states.
 
-    // READ A LINE OF INPUT FROM stdin
-    printf("Please enter a state followed by ENTER: ");
-    if( fgets(str, sizeof str, stdin) == NULL ) {
-        printf("Error: empty input line.\n");
-        return 0; 
-    }
+    // VARIABLES FOR OUTPUT
+    ofstream out_file;
+    
+   // VARIABLES FOR TIME COUNT
+    time_t begin, end;
 
-    // CONVERT THE STRING TO A STATE
-    nchars = read_state(str, &state);
-    if( nchars <= 0 ) {
-        printf("Error: invalid state entered.\n");
-        return 0; 
-    }
+    in_file.open(argv[1]);
+    out_file.open(argv[2]);
 
-    printf("The state you entered is: ");
-    print_state(stdout, &state);
-    printf("\n");
+    // Header of the summary table
+    out_file << " algorithm, domain, instance, cost,";
+    out_file << " generated, time, states for sec ";
+    out_file << endl;
 
-    // CHECKS IF THE FIRST STATE IS THE GOAL
-    if (is_goal(&state)) return 0;
+    // RUN THE ALGORITHM FOR EACH LINE IN INSTANCE'S FILE
+    while(getline(in_file,line)){
 
-    // VARIABLES FOR THE IDDFS
-    int cost = 0;
-    int max_cost = 0;
-    int path_cost;
-    int hist = init_history;
+        // READ A LINE AND BUILD STATE
+        read_state(line.c_str(),&state);
 
-    // ITERATIVE DEEPENING LOOP
-    while (1){
-        path_cost = dfs(state, cost, max_cost,hist);
-        if (path_cost != -1){
-            return path_cost;
+         // VARIABLES FOR THE IDDFS
+        int cost = 0;
+        int max_cost = 0;
+        int path_cost;
+        int hist = init_history;
+
+        states = 0;
+
+        // BEGIN THE CLOCK
+        time(&begin);
+
+        // ITERATIVE DEEPENING LOOP
+        while (1){
+            path_cost = dfs(state, cost, max_cost,hist);
+            if (path_cost != -1){
+                break;
+            }
+            max_cost++;
         }
-        max_cost++;
+        
+        time(&end);
+
+        out_file << " dfid , X , \"" << line << "\", ";
+        out_file << path_cost << ", " << states << ", ";
+        out_file << begin-end << ", " << states/(begin-end);
+        out_file << endl;
     }
 
+    in_file.close();
+    out_file.close();
     return 0;
+    
 }
 
 int dfs(state_t state, int cost, int max_cost, int hist){
@@ -88,7 +105,7 @@ int dfs(state_t state, int cost, int max_cost, int hist){
 
             // SHOW THE STATE AND VALUES
             print_state(stdout, &child);
-            printf("  %s (cost %d), goal=%d\n", get_fwd_rule_label(rule), get_fwd_rule_cost(rule), is_goal(&child));
+            printf(" %s (cost %d), goal=%d\n", get_fwd_rule_label(rule), get_fwd_rule_cost(rule), is_goal(&child));
 
             //CHECK IF THE STATE IS THE GOAL
             if (is_goal(&child)) { 

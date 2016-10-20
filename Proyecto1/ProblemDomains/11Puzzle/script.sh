@@ -1,10 +1,11 @@
 #!/bin/bash
 # $1 archivo ejecutable
 # $2 es el archivo de entrada (instancias)
-#C=$(($C -1))
+#
 
 F="$3.csv"
 C=$(cat $2 | wc -l)
+C=$(($C +1))
 i=$((1))
 
 echo  "group, algorithm, domain, instance, cost, generated, time, states for sec " >> $F

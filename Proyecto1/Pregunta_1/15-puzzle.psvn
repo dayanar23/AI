@@ -1,0 +1,97 @@
+DOMAIN tile 16
+       b 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15   # these are the constants (b is for the blank)
+
+16
+
+# Posiciones del problema
+#   |  b  1  2  3 |
+#   |  4  5  6  7 |
+#   |  8  9 10 11 |
+#   | 12 13 14 15 |
+
+tile tile tile tile  tile tile tile tile  tile tile tile tile  tile tile tile tile
+
+# Posicion (b). Esquina
+b X - -  - - - -  - - - -  - - - -  =>  X b - -  - - - -  - - - -  - - - -  LABEL LEFT
+b - - -  X - - -  - - - -  - - - -  =>  X - - -  b - - -  - - - -  - - - -  LABEL UP
+
+# Posicion (1)
+X b - -  - - - -  - - - -  - - - -  =>  b X - -  - - - -  - - - -  - - - -  LABEL RIGHT
+- b X -  - - - -  - - - -  - - - -  =>  - X b -  - - - -  - - - -  - - - -  LABEL LEFT
+- b - -  - X - -  - - - -  - - - -  =>  - X - -  - b - -  - - - -  - - - -  LABEL UP
+
+# Posicion (2)
+- - b X  - - - -  - - - -  - - - -  =>  - - X b  - - - -  - - - -  - - - -  LABEL LEFT
+- X b -  - - - -  - - - -  - - - -  =>  - b X -  - - - -  - - - -  - - - -  LABEL RIGHT
+- - b -  - - X -  - - - -  - - - -  =>  - - X -  - - b -  - - - -  - - - -  LABEL UP
+
+# Posicion (3). Esquina
+- - X b  - - - -  - - - -  - - - -  =>  - - b X  - - - -  - - - -  - - - -  LABEL RIGHT
+- - - b  - - - X  - - - -  - - - -  =>  - - - X  - - - b  - - - -  - - - -  LABEL UP
+
+# Posicion (4).
+- - - -  b X - -  - - - -  - - - -  =>  - - - -  X b - -  - - - -  - - - -  LABEL LEFT
+- - - -  b - - -  X - - -  - - - -  =>  - - - -  X - - -  b - - -  - - - -  LABEL UP
+X - - -  b - - -  - - - -  - - - -  =>  b - - -  X - - -  - - - -  - - - -  LABEL DOWN
+
+# Posicion (5).
+- - - -  - b X -  - - - -  - - - -  =>  - - - -  - X b -  - - - -  - - - -  LABEL LEFT
+- - - -  X b - -  - - - -  - - - -  =>  - - - -  b X - -  - - - -  - - - -  LABEL RIGHT
+- X - -  - b - -  - - - -  - - - -  =>  - b - -  - X - -  - - - -  - - - -  LABEL DOWN
+- - - -  - b - -  - X - -  - - - -  =>  - - - -  - X - -  - b - -  - - - -  LABEL UP
+
+# Posicion (6).
+- - - -  - X b -  - - - -  - - - -  =>  - - - -  - b X -  - - - -  - - - -  LABEL RIGHT
+- - - -  - - b X  - - - -  - - - -  =>  - - - -  - - X b  - - - -  - - - -  LABEL LEFT
+- - X -  - - b -  - - - -  - - - -  =>  - - b -  - - X -  - - - -  - - - -  LABEL DOWN
+- - - -  - - b -  - - X -  - - - -  =>  - - - -  - - X -  - - b -  - - - -  LABEL UP
+
+# - - - -  - - - -  - - - -  - - - -  =>  - - - -  - - - -  - - - -  - - - -  LABEL
+
+# Posicion (7)
+- - - -  - - X b  - - - -  - - - -  =>  - - - -  - - b X  - - - -  - - - -  LABEL RIGHT
+- - - X  - - - b  - - - -  - - - -  =>  - - - b  - - - X  - - - -  - - - -  LABEL DOWN
+- - - -  - - - b  - - - X  - - - -  =>  - - - -  - - - X  - - - b  - - - -  LABEL UP
+
+# Posicion (8)
+- - - -  - - - -  b X - -  - - - -  =>  - - - -  - - - -  X b - -  - - - -  LABEL LEFT
+- - - -  X - - -  b - - -  - - - -  =>  - - - -  b - - -  X - - -  - - - -  LABEL DOWN
+- - - -  - - - -  b - - -  X - - -  =>  - - - -  - - - -  X - - -  b - - -  LABEL UP
+
+# Posicion (9)
+- - - -  - - - -  - b X -  - - - -  =>  - - - -  - - - -  - X b -  - - - -  LABEL LEFT
+- - - -  - - - -  X b - -  - - - -  =>  - - - -  - - - -  b X - -  - - - -  LABEL RIGHT
+- - - -  - X - -  - b - -  - - - -  =>  - - - -  - b - -  - X - -  - - - -  LABEL DOWN
+- - - -  - - - -  - b - -  - X - -  =>  - - - -  - - - -  - X - -  - b - -  LABEL UP
+
+# Posicion (10)
+- - - -  - - - -  - - b X  - - - -  =>  - - - -  - - - -  - - X b  - - - -  LABEL LEFT
+- - - -  - - - -  - X b -  - - - -  =>  - - - -  - - - -  - b X -  - - - -  LABEL RIGHT
+- - - -  - - X -  - - b -  - - - -  =>  - - - -  - - b -  - - X -  - - - -  LABEL DOWN
+- - - -  - - - -  - - b -  - - X -  =>  - - - -  - - - -  - - X -  - - b -  LABEL UP
+
+# Posicion (11)
+- - - -  - - - X  - - - b  - - - -  =>  - - - -  - - - b  - - - X  - - - -  LABEL DOWN
+- - - -  - - - -  - - X b  - - - -  =>  - - - -  - - - -  - - b X  - - - -  LABEL RIGHT
+- - - -  - - - -  - - - b  - - - X  =>  - - - -  - - - -  - - - X  - - - b  LABEL UP
+
+# Posicion (12). Esquina
+- - - -  - - - -  - - - -  b X - -  =>  - - - -  - - - -  - - - -  X b - -  LABEL LEFT
+- - - -  - - - -  X - - -  b - - -  =>  - - - -  - - - -  b - - -  X - - -  LABEL DOWN
+
+# Posicion (13)
+- - - -  - - - -  - - - -  X b - -  =>  - - - -  - - - -  - - - -  b X - -  LABEL RIGHT
+- - - -  - - - -  - - - -  - b X -  =>  - - - -  - - - -  - - - -  - X b -  LABEL LEFT
+- - - -  - - - -  - X - -  - b - -  =>  - - - -  - - - -  - b - -  - X - -  LABEL DOWN
+
+# Posicion (14)
+- - - -  - - - -  - - - -  - X b -  =>  - - - -  - - - -  - - - -  - - X b  LABEL RIGHT
+- - - -  - - - -  - - - -  - - b X  =>  - - - -  - - - -  - - - -  - b X -  LABEL LEFT
+- - - -  - - - -  - - X -  - - b -  =>  - - - -  - - - -  - - b -  - - X -  LABEL DOWN
+
+# Posicion (15). Esquina
+- - - -  - - - -  - - - X  - - - b  =>  - - - -  - - - -  - - - b  - - - X  LABEL DOWN
+- - - -  - - - -  - - - -  - - X b  =>  - - - -  - - - -  - - - -  - - b X  LABEL RIGHT
+
+
+GOAL b 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15

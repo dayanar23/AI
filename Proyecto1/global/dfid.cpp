@@ -15,12 +15,12 @@ void signalHandler(int signum)
 {
     out_file << "X, dfid , 11puzzle , \"" << line << "\", ";
     out_file << "na, na, na, na" << endl;
-    out_file.close();
 
    exit(signum);  
 }
 
-// FORWARD DECLARATION FOR DFS FUNCTION
+// FORWARD DECLARATION FOR FUNCTIONS
+int iddfs(state_t);
 int dfs(state_t, int,int,int);
 
 // GLOBAL VARIABLE FOR NUMBER OF STATES 
@@ -33,7 +33,7 @@ int main(int argc, char **argv ) {
     state_t state; // state_t is defined by the PSVN API. It is the type used for individual states.
 
     // VARIABLES FOR OUTPUT 
-    out_file.open(argv[2]);
+    out_file.open(argv[2], std::fstream::out | std::fstream::app);
     
    // VARIABLES FOR TIME COUNT
     clock_t begin, end;
@@ -41,55 +41,43 @@ int main(int argc, char **argv ) {
     line = argv[1];
     //getline(cin,line);
 
-    // Header of the summary table
-    out_file << "group, algorithm, domain, instance, cost,";
-    out_file << " generated, time, states for sec ";
-    out_file << endl;
-
     // READ A LINE AND BUILD STATE
     read_state(line.c_str(),&state);
+    int cost;
+
+    // BEGIN THE CLOCK
+    begin = clock();
+
+    cost = iddfs(state);
+        
+    // END THE CLOCK        
+    end = clock();
+
+    long double secs = double(end - begin)/ CLOCKS_PER_SEC;
+    double gen = double(states)/secs;
+
+    out_file << "X, dfid, 11-puzzle, \"" << line << "\", ";
+    out_file << cost << ", " << states << ", ";
+    out_file << secs << ", " << gen << endl;
+
+    exit(0);
+}
+
+int iddfs(state_t state){
 
     // VARIABLES FOR THE IDDFS
-    int cost = 0;
     int max_cost = 0;
     int path_cost;
     int hist = init_history;
 
-    states = 0;
-
-    try {
-        // BEGIN THE CLOCK
-        begin = clock();
-
-        
-        // ITERATIVE DEEPENING LOOP
-        while (1){
-            path_cost = dfs(state, cost, max_cost,hist);
-            if (path_cost != -1){
-                break;
-            }
-            max_cost++;
+    // ITERATIVE DEEPENING LOOP
+    while (1){
+        path_cost = dfs(state, 0, max_cost,hist);
+        if (path_cost != -1){
+            return path_cost;
         }
-
-        // END THE CLOCK        
-        end = clock();
-
-        long double secs = double(end - begin)/ CLOCKS_PER_SEC;
-        double gen = double(states)/secs;
-
-        out_file << "X, dfid, 11-puzzle, \"" << line << "\", ";
-        out_file << path_cost << ", " << states << ", ";
-        out_file << secs << ", " << gen << endl;
-        out_file.close();
+        max_cost++;
     }
-    catch(int e){
-        out_file << " dfid , 11puzzle , \"" << line << "\", ";
-        out_file << "na, na, na, na" << endl;
-        out_file.close();
-        exit(0);
-    }
-
-    return 0;
 }
 
 int dfs(state_t state, int cost, int max_cost, int hist){

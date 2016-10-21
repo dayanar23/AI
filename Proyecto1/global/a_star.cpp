@@ -7,32 +7,62 @@ provided as a command line argument, it prints the state_map it builds to that f
 
 Copyright (C) 2013 by the PSVN Research Group, University of Alberta
 */
-
+#include <stdlib.h>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <time.h>
+#include <csignal>
 #include "heuristics.h"
 #include <stdio.h>
 #include <vector>
 #include "priority_queue.hpp"
 
+
+using namespace std;
+
+long long states; // number of states
+string line,fileName;
+ofstream out_file; 
+
+void signalHandler(int signum)
+{
+    out_file << "X, IDA*, gap" << fileName << ", \"";
+    out_file << line << "\", " << "na, na, na, na, na"; 
+    out_file << endl;
+
+   exit(signum);  
+}
+
 int main(int argc, char **argv) {
+    signal(SIGINT, signalHandler);
     state_t state, child;   // NOTE: "child" will be a predecessor of state, not a successor
     int d, ruleid;
     ruleid_iterator_t iter;
 
     PriorityQueue<state_t> open; // used for the states we have generated but not yet expanded (the OPEN list)
     state_map_t *map = new_state_map(); // contains the cost-to-goal for all states that have been generated
-    FILE *file; // the final state_map is written to this file if it is provided (command line argument)
+    fileName = argv[3]; 
+    // VARIABLES FOR OUTPUT 
+    out_file.open(argv[2], std::fstream::out | std::fstream::app);
+
+    // VARIABLES FOR TIME COUNT
+    clock_t begin, end;
+
+    line = argv[1];
+    int bound = gaps(&state);
 
     first_goal_state(&state,&d);
     
-    char* string = "27 26 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25";
-
-    read_state(string,&state);
+    read_state(line.c_str(),&state);
 
     state_map_add(map, &state, 0);
     open.Add(0,0,state);
     
     d = 0;
+    states = 0;
     //printf("Prueba\n");
+    begin = clock();
 
     while( !open.Empty() ) {
         // get current distance from goal; since operator costs are
@@ -63,6 +93,7 @@ int main(int argc, char **argv) {
             }
 
             apply_fwd_rule(ruleid, &state, &child);
+            states++;
             const int child_d = d + get_fwd_rule_cost(ruleid);
 
             const int heur = gaps(&state);
@@ -78,16 +109,14 @@ int main(int argc, char **argv) {
         }
     }
     
-    // write the state map to a file
-    if( argc >= 2 ) {
-        file = fopen(argv[1], "w");
-        if( file == NULL ) {
-            fprintf(stderr, "could not open %s for writing\n", argv[1]);
-            exit(-1);
-        }
-        write_state_map(file, map);
-        fclose(file);
-    }
+    end = clock();
+
+    double secs = double(end - begin)/CLOCKS_PER_SEC;
+    double gen = double(states)/secs;
+
+    out_file << "X, IDA*, gap, " << fileName << ", \"";
+    out_file << line << "\", " << d << ", " << bound << ", ";
+    out_file  << states << ", " << secs << ", " << gen << endl;
     
     return 0;
 }

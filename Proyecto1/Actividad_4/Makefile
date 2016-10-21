@@ -34,8 +34,8 @@ psvn2c_abstraction.c:
 	$(CXX) $(OPT) ../global/distSummary.cpp -include $< -o $@
 	rm -f $*.c
 
-%.ida_star_gap: %.c ../global/ida_star.cpp
-	$(CXX) $(OPT) ../global/ida_star.cpp -include $< -o $@
+%.ida_star_gap: %.c ../global/ida_star_gap.cpp
+	$(CXX) $(OPT) ../global/ida_star_gap.cpp -include $< -o $@
 	rm -f $*.c
 
 .PHONY: clean

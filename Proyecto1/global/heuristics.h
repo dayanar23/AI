@@ -36,7 +36,7 @@ int gaps(state_t *estado_actual){
 
 	for (int i = 1; i < N; ++i)
 	{
-		diferencia = abs(estado_actual->vars[i] - estado_actual->vars[i + 1]);
+		diferencia = abs(estado_actual->vars[i] - estado_actual->vars[i+1]);
 		
 		if (diferencia > 1) {
 			h += 1;

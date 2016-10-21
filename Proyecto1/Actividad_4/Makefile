@@ -30,7 +30,7 @@ psvn2c_abstraction.c:
 	$(CXX) $(OPT) ../global/distSummary.cpp -include $< -o $@
 	rm -f $*.c
 
-%.ida_star: %.c ../global/ida_star.cpp
+%.ida_star_gap: %.c ../global/ida_star.cpp
 	$(CXX) $(OPT) ../global/ida_star.cpp -include $< -o $@
 	rm -f $*.c
 

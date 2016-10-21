@@ -5,7 +5,6 @@
 #include <string>
 #include <time.h>
 #include <csignal>
-#include <climits>
 #include "heuristics.h"
 
 using namespace std;
@@ -24,23 +23,9 @@ void signalHandler(int signum)
    exit(signum);  
 }
 
-// STRUCT FOR NODE'S VALUES
-struct node{
-	state_t state;
-	unsigned int cost;
-	unsigned int h;
-	unsigned int hist;
-};
-
-// STRUCT FOR PAIRS NODE-ESTIMATED COST
-struct pair_n{
-	node *n;
-	unsigned int e_cost;
-};
-
 // FORWARD DECLARATIONS
-struct node ida_star(state_t, unsigned int);
-struct pair_n f_bounded_dfs_visit(node, unsigned int,state_map_t*);
+int ida_star(state_t);
+int f_bounded_dfs_visit(state_t, int, int, int);
 
 
 int main(int argc, char **argv){
@@ -62,15 +47,12 @@ int main(int argc, char **argv){
     read_state(line.c_str(),&state);
 
 	int cost;
-	states = 0;
-	struct node goal_n; 
-	unsigned int bound = gaps(&state);
+    int bound = gaps(&state);
 
     // BEGIN THE CLOCK
     begin = clock();
 
-    goal_n = ida_star(state, bound);
-    cost = goal_n.cost;
+    cost = ida_star(state);
     // END THE CLOCK        
     end = clock();
 
@@ -81,114 +63,82 @@ int main(int argc, char **argv){
 	out_file << "X, IDA*, gap, " << fileName << ", \"";
     out_file << line << "\", " << cost << ", " << bound << ", ";
     out_file  << states << ", " << secs << ", " << gen << endl;
-
-    exit(0);
+    
+    
+    return 0;
 }
 
 
-struct node ida_star(state_t state, unsigned int bound){
+int ida_star(state_t state){
 
 	// VARIABLES FOR IDA* SEARCH
-	struct node node;
-	struct pair_n pair;
-	state_map_t *state_m= new_state_map();
-
-	// INIT VARIABLES
-
-    node.state = state;
-    node.cost = 0;
-    node.h = bound;
-    node.hist = init_history;
+    states = 0;
+    int bound = 0;
+    int cost;
+    int hist = init_history;
 
     // IDA* LOOP
     while(true){
 
-        pair = f_bounded_dfs_visit(node, bound, state_m);
+        cost = f_bounded_dfs_visit(state, hist, 0, bound);
 
-        if (pair.n != NULL) {
-        	return *(pair.n);
+        if (cost!= -1) {
+        	return cost;
         }
 
-        bound = pair.e_cost;
-
+        bound++;
     }
 }
 
-struct pair_n f_bounded_dfs_visit(node n, unsigned int bound, state_map_t *state_m){
+int f_bounded_dfs_visit(state_t state, int hist, int cost, int bound){
     
     // BASE CASES
-    unsigned int h = n.cost + n.h;
-    if (h > bound) {
-    	pair_n p; 
-    	p.n = NULL; 
-    	p.e_cost = h;
-    	return p;
+    int h = gaps(&state);
+    int f = cost + h;
+
+    if (f > bound) {
+    	return -f;
     }
 
     // CHECK IF THE STATE IS THE GOAL
-    if (is_goal(&n.state)) 
+    if (is_goal(&state)) 
     	{
-    		pair_n p; 
-    		p.n = &n;
-    		p.e_cost = n.cost;
-    		return p;
+    		return cost;
     	}  
 
     // VARIABLES FOR ITERATING THROUGH state's SUCCESSORS
     // ruleid_terator_t is the type defined by the PSVN API successor/predecessor iterators.
     ruleid_iterator_t iter; 
     int rule; // an iterator returns a number identifying a rule
-    int hist;
-    state_t s_child;
-    state_t state = n.state;
-    unsigned int min_e_cost;
+    int new_hist;
+    state_t child;
+    int new_cost;
 
-    state_map_add(state_m,&n.state,n.cost);
     init_fwd_iter(&iter,&state);
-
-    struct node n_child;
-    struct pair_n p;
-
-    min_e_cost = UINT_MAX;
 
     // LOOP THOUGH THE CHILDREN ONE BY ONE
     while((rule = next_ruleid(&iter)) >= 0) {
         
-        if (fwd_rule_valid_for_history(n.hist,rule)) {
+        if (fwd_rule_valid_for_history(hist,rule)) {
 
-	        hist = next_fwd_history(n.hist,rule);
+	        new_hist = next_fwd_history(hist,rule);
 
 	        // GENERATE CHILD STATE
-	        apply_fwd_rule(rule, &state, &s_child);
+	        apply_fwd_rule(rule, &state, &child);
 
-	        // INIT CHILD STATE
-	        n_child.hist = hist;
-	        n_child.state = s_child;
-	        n_child.cost = n.cost++;
-	        n_child.h = gaps(&s_child);
-
-	        // ADD STATE TO THE MAP
-	        state_map_add(state_m,&s_child,n_child.cost);
+            states++;
+            // SHOW THE STATE AND VALUES
+            print_state(stdout, &child);
+            printf(" %s (cost %d), goal=%d\n", get_fwd_rule_label(rule), get_fwd_rule_cost(rule), is_goal(&child));
 
 	        // RECURSION OF THE FUNCTION
-	        p = f_bounded_dfs_visit(n_child, bound, state_m);
+	        new_cost = f_bounded_dfs_visit(child, new_hist, cost++, bound);	        
 
-	        states++;
-
-	        if (p.n != NULL) {
-	        	return p;
+	        if (new_cost != -1) {
+	        	return new_cost;
 	        }
-
-	        // CALCULATE NEW ESTIMATED COST
-	        min_e_cost = min(min_e_cost, p.e_cost);
-
-	        //min_estimado = (min_estimado < p.estimado) ? min_estimado : p.estimado;
     	}
     }
 
-    // SET THE VARIABLES OF PAIR
-    p.n = NULL;
-    p.e_cost = min_e_cost;
-
-    return p;
+    return -1;
 }

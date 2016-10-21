@@ -29,12 +29,12 @@ int manhattan_distance(int *estado_actual, int N){
 	return h;
 }
 
-unsigned int gaps(state_t *estado_actual){
+unsigned int gaps(int *estado_actual){
 	unsigned int h = 0;
 	unsigned int N = sizeof(estado_actual->vars)/sizeof(estado_actual->vars[0]);
 	unsigned int diferencia;
 
-	for (unsigned int i = 1; i < N; ++i)
+	for (int i = 1; i < N; ++i)
 	{
 		diferencia = abs(estado_actual->vars[i] - estado_actual->vars[i + 1]);
 		

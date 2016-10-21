@@ -1,0 +1,77 @@
+DOMAIN tile 12
+       b 1 2 3  4 5 6 7  8 9 10 11  # (b es la casilla vacia)
+
+12
+
+# Posiciones del problema
+#   |  b  1  2  3 |
+#   |  4  5  6  7 |
+#   |  8  9 10 11 |
+
+tile tile tile tile  tile tile tile tile  tile tile tile tile
+
+# Posicion (b). Esquina
+b X - -  - - - -  - - - -  =>  X b - -  - - - -  - - - -  LABEL LEFTb
+b - - -  X - - -  - - - -  =>  X - - -  b - - -  - - - -  LABEL UPb
+
+# Posicion (1)
+X b - -  - - - -  - - - -  =>  b X - -  - - - -  - - - -  LABEL RIGHT1
+- b X -  - - - -  - - - -  =>  - X b -  - - - -  - - - -  LABEL LEFT1
+- b - -  - X - -  - - - -  =>  - X - -  - b - -  - - - -  LABEL UP1
+
+# Posicion (2)
+- - b X  - - - -  - - - -  =>  - - X b  - - - -  - - - -  LABEL LEFT2
+- X b -  - - - -  - - - -  =>  - b X -  - - - -  - - - -  LABEL RIGHT2
+- - b -  - - X -  - - - -  =>  - - X -  - - b -  - - - -  LABEL UP2
+
+# Posicion (3). Esquina
+- - X b  - - - -  - - - -  =>  - - b X  - - - -  - - - -  LABEL RIGHT3
+- - - b  - - - X  - - - -  =>  - - - X  - - - b  - - - -  LABEL UP3
+
+# Posicion (4).
+- - - -  b X - -  - - - -  =>  - - - -  X b - -  - - - -  LABEL LEFT4
+- - - -  b - - -  X - - -  =>  - - - -  X - - -  b - - -  LABEL UP4
+X - - -  b - - -  - - - -  =>  b - - -  X - - -  - - - -  LABEL DOWN4
+
+# Posicion (5).
+- - - -  - b X -  - - - -  =>  - - - -  - X b -  - - - -    LABEL LEFT5
+- - - -  X b - -  - - - -  =>  - - - -  b X - -  - - - -  LABEL RIGHT5
+- X - -  - b - -  - - - -  =>  - b - -  - X - -  - - - -  LABEL DOWN5
+- - - -  - b - -  - X - -  =>  - - - -  - X - -  - b - -  LABEL UP5
+
+# Posiciones del problema
+#   |  b  1  2  3 |
+#   |  4  5  6  7 |
+#   |  8  9 10 11 |
+
+# Posicion (6).
+- - - -  - X b -  - - - -  =>  - - - -  - b X -  - - - -  LABEL RIGHT6
+- - - -  - - b X  - - - -  =>  - - - -  - - X b  - - - -  LABEL LEFT6
+- - X -  - - b -  - - - -  =>  - - b -  - - X -  - - - -  LABEL DOWN6
+- - - -  - - b -  - - X -  =>  - - X -  - - b -  - - - -  LABEL UP6
+
+# Posicion (7)
+- - - -  - - X b  - - - -  =>  - - - -  - - b X  - - - -  LABEL RIGHT7
+- - - X  - - - b  - - - -  =>  - - - b  - - - X  - - - -  LABEL DOWN7
+- - - -  - - - b  - - - X  =>  - - - -  - - - X  - - - b  LABEL UP7
+
+# Posicion (8). Esquina
+- - - -  - - - -  b X - -  =>  - - - -  - - - -  X b - -  LABEL LEFT8
+- - - -  X - - -  b - - -  =>  - - - -  b - - -  X - - -  LABEL DOWN8
+
+# Posicion (9)
+- - - -  - - - -  - b X -  =>  - - - -  - - - -  - X b -  LABEL LEFT9
+- - - -  - - - -  X b - -  =>  - - - -  - - - -  b X - -  LABEL RIGHT9
+- - - -  - X - -  - b - -  =>  - - - -  - b - -  - X - -  LABEL DOWN9
+
+# Posicion (10)
+- - - -  - - - -  - - b X  =>  - - - -  - - - -  - - X b  LABEL LEFT10
+- - - -  - - - -  - X b -  =>  - - - -  - - - -  - b X -  LABEL RIGHT10
+- - - -  - - X -  - - b -  =>  - - - -  - - b -  - - X -  LABEL DOWN10
+
+# Posicion (11). Esquina.
+- - - -  - - - -  - - X b  =>  - - - -  - - - -  - - b X  LABEL RIGHT11
+- - - -  - - - X  - - - b  =>  - - - -  - - - b  - - - X  LABEL DOWN11
+
+
+GOAL b 1 2 3 4 5 6 7 8 9 10 11

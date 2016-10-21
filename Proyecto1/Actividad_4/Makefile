@@ -22,6 +22,10 @@ psvn2c_abstraction.c:
 	$(CC) $(OPT) ../global/succ.c -include $< -o $@
 	rm -f $*.c
 
+%.a_star: %.c ../global/a_star.cpp
+	$(CXX) $(OPT) ../global/a_star.cpp -include $< -o $@
+	rm -f $*.c
+
 %.dist: %.c ../global/dist.cpp
 	$(CXX) $(OPT) ../global/dist.cpp -include $< -o $@
 	rm -f $*.c

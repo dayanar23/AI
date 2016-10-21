@@ -1,0 +1,60 @@
+# This file was created by the abstractor program.
+# The source PSVN file was: 15puzzle.psvn
+# The abstraction used is stored in file: abs3.abst
+
+DOMAIN PIECE 16
+  B 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+
+16
+PIECE PIECE PIECE PIECE PIECE PIECE PIECE PIECE PIECE PIECE PIECE PIECE PIECE PIECE PIECE PIECE
+
+B X - - - - - - - - - - - - - - => X B - - - - - - - - - - - - - - LABEL REV1 COST 1
+- B X - - - - - - - - - - - - - => - X B - - - - - - - - - - - - - LABEL REV2 COST 1
+- - B X - - - - - - - - - - - - => - - X B - - - - - - - - - - - - LABEL REV3 COST 1
+- - - - B X - - - - - - - - - - => - - - - X B - - - - - - - - - - LABEL REV4 COST 1
+- - - - - B X - - - - - - - - - => - - - - - X B - - - - - - - - - LABEL REV5 COST 1
+- - - - - - B X - - - - - - - - => - - - - - - X B - - - - - - - - LABEL REV6 COST 1
+- - - - - - - - B X - - - - - - => - - - - - - - - X B - - - - - - LABEL REV7 COST 1
+- - - - - - - - - B X - - - - - => - - - - - - - - - X B - - - - - LABEL REV8 COST 1
+- - - - - - - - - - B X - - - - => - - - - - - - - - - X B - - - - LABEL REV9 COST 1
+- - - - - - - - - - - - B X - - => - - - - - - - - - - - - X B - - LABEL REV10 COST 1
+- - - - - - - - - - - - - B X - => - - - - - - - - - - - - - X B - LABEL REV11 COST 1
+- - - - - - - - - - - - - - B X => - - - - - - - - - - - - - - X B LABEL REV12 COST 1
+X B - - - - - - - - - - - - - - => B X - - - - - - - - - - - - - - LABEL REV13 COST 1
+- X B - - - - - - - - - - - - - => - B X - - - - - - - - - - - - - LABEL REV14 COST 1
+- - X B - - - - - - - - - - - - => - - B X - - - - - - - - - - - - LABEL REV15 COST 1
+- - - - X B - - - - - - - - - - => - - - - B X - - - - - - - - - - LABEL REV16 COST 1
+- - - - - X B - - - - - - - - - => - - - - - B X - - - - - - - - - LABEL REV17 COST 1
+- - - - - - X B - - - - - - - - => - - - - - - B X - - - - - - - - LABEL REV18 COST 1
+- - - - - - - - X B - - - - - - => - - - - - - - - B X - - - - - - LABEL REV19 COST 1
+- - - - - - - - - X B - - - - - => - - - - - - - - - B X - - - - - LABEL REV20 COST 1
+- - - - - - - - - - X B - - - - => - - - - - - - - - - B X - - - - LABEL REV21 COST 1
+- - - - - - - - - - - - X B - - => - - - - - - - - - - - - B X - - LABEL REV22 COST 1
+- - - - - - - - - - - - - X B - => - - - - - - - - - - - - - B X - LABEL REV23 COST 1
+- - - - - - - - - - - - - - X B => - - - - - - - - - - - - - - B X LABEL REV24 COST 1
+X - - - B - - - - - - - - - - - => B - - - X - - - - - - - - - - - LABEL REV25 COST 1
+- X - - - B - - - - - - - - - - => - B - - - X - - - - - - - - - - LABEL REV26 COST 1
+- - X - - - B - - - - - - - - - => - - B - - - X - - - - - - - - - LABEL REV27 COST 1
+- - - X - - - B - - - - - - - - => - - - B - - - X - - - - - - - - LABEL REV28 COST 1
+- - - - X - - - B - - - - - - - => - - - - B - - - X - - - - - - - LABEL REV29 COST 1
+- - - - - X - - - B - - - - - - => - - - - - B - - - X - - - - - - LABEL REV30 COST 1
+- - - - - - X - - - B - - - - - => - - - - - - B - - - X - - - - - LABEL REV31 COST 1
+- - - - - - - X - - - B - - - - => - - - - - - - B - - - X - - - - LABEL REV32 COST 1
+- - - - - - - - X - - - B - - - => - - - - - - - - B - - - X - - - LABEL REV33 COST 1
+- - - - - - - - - X - - - B - - => - - - - - - - - - B - - - X - - LABEL REV34 COST 1
+- - - - - - - - - - X - - - B - => - - - - - - - - - - B - - - X - LABEL REV35 COST 1
+- - - - - - - - - - - X - - - B => - - - - - - - - - - - B - - - X LABEL REV36 COST 1
+B - - - X - - - - - - - - - - - => X - - - B - - - - - - - - - - - LABEL REV37 COST 1
+- B - - - X - - - - - - - - - - => - X - - - B - - - - - - - - - - LABEL REV38 COST 1
+- - B - - - X - - - - - - - - - => - - X - - - B - - - - - - - - - LABEL REV39 COST 1
+- - - B - - - X - - - - - - - - => - - - X - - - B - - - - - - - - LABEL REV40 COST 1
+- - - - B - - - X - - - - - - - => - - - - X - - - B - - - - - - - LABEL REV41 COST 1
+- - - - - B - - - X - - - - - - => - - - - - X - - - B - - - - - - LABEL REV42 COST 1
+- - - - - - B - - - X - - - - - => - - - - - - X - - - B - - - - - LABEL REV43 COST 1
+- - - - - - - B - - - X - - - - => - - - - - - - X - - - B - - - - LABEL REV44 COST 1
+- - - - - - - - B - - - X - - - => - - - - - - - - X - - - B - - - LABEL REV45 COST 1
+- - - - - - - - - B - - - X - - => - - - - - - - - - X - - - B - - LABEL REV46 COST 1
+- - - - - - - - - - B - - - X - => - - - - - - - - - - X - - - B - LABEL REV47 COST 1
+- - - - - - - - - - - B - - - X => - - - - - - - - - - - X - - - B LABEL REV48 COST 1
+
+GOAL B B 3 B B B B B 9 1B B 12 13 14 15 16

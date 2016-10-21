@@ -1,0 +1,4 @@
+abstraction {
+  PIECE { B B B 3 B B B B B 9 B B 12 13 14 15 }
+  projection { K K K K K K K K K K K K K K K K }
+}

@@ -1,5 +1,0 @@
-#!/bin/bash
-while read line
-do
-  timeout -k 2m ./11puzzle.dist line 11pOUT.csv
-done < test.txt

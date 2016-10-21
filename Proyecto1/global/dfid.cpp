@@ -8,13 +8,13 @@
 
 using namespace std;
 
-string line;
+string line,fileName;
 ofstream out_file;
 
 void signalHandler(int signum)
 {
-    out_file << "X, dfid , 11puzzle , \"" << line << "\", ";
-    out_file << "na, na, na, na" << endl;
+    out_file << "X, dfid, " << fileName << ", \"";
+    out_file << line << "\", " << "na, na, na, na" << endl;
 
    exit(signum);  
 }
@@ -31,7 +31,7 @@ int main(int argc, char **argv ) {
     // VARIABLES FOR INPUT
     ssize_t nchars; 
     state_t state; // state_t is defined by the PSVN API. It is the type used for individual states.
-
+    fileName = argv[3]; 
     // VARIABLES FOR OUTPUT 
     out_file.open(argv[2], std::fstream::out | std::fstream::app);
     
@@ -56,9 +56,9 @@ int main(int argc, char **argv ) {
     long double secs = double(end - begin)/ CLOCKS_PER_SEC;
     double gen = double(states)/secs;
 
-    out_file << "X, dfid, 11-puzzle, \"" << line << "\", ";
-    out_file << cost << ", " << states << ", ";
-    out_file << secs << ", " << gen << endl;
+    out_file << "X, dfid, " << fileName << ", \"";
+    out_file << line << "\", " << cost << ", " << states;
+    out_file << ", " << secs << ", " << gen << endl;
 
     exit(0);
 }

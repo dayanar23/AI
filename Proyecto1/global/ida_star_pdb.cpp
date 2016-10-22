@@ -7,27 +7,29 @@
 #include <csignal>
 #include <climits>
 
+using namespace std;
+
 abstraction_t *a1, *a2, *a3;
 state_map_t *m1, *m2, *m3;
 
-int heuristic(state_t state){
+int heuristic(state_t *state){
 
     int h = 0;
     int *h_aux;
     state_t new_state;
 
 
-    abstract_state(a1, &state, &new_state);
+    abstract_state(a1, state, &new_state);
     h_aux = state_map_get(m1, &new_state);
     h = h + *h_aux;
 
     assert(*h_aux != NULL);
-    abstract_state(a2, &state, &new_state);
+    abstract_state(a2, state, &new_state);
     h_aux = state_map_get(m2, &new_state);
 
     h = h + *h_aux;
 
-    abstract_state(a3, &state, &new_state);
+    abstract_state(a3, state, &new_state);
     h_aux = state_map_get(m3, &new_state);
 
     h = h + *h_aux;
@@ -35,8 +37,6 @@ int heuristic(state_t state){
     return h;
 
 }
-
-using namespace std;
 
 long long int states;
 
@@ -70,7 +70,7 @@ int main(int argc, char **argv){
     read_state(line.c_str(),&state);
 
     pair<int,bool> cost;
-    int bound = heuristic(state);
+    int bound = heuristic(&state);
     int h = bound;
 
     states = 0;
@@ -121,7 +121,7 @@ std::pair<int,bool> f_bounded_dfs_visit(state_t state, int hist, int h, int boun
     int ruleid, new_hist; 
     int t;
 
-    int f = h + heuristic(state);
+    int f = h + heuristic(&state);
     if (f > bound){
         max_cost.first = f;
         max_cost.second = false;

@@ -8,17 +8,14 @@
 
 using namespace std;
 
-string line,fileName;
-ofstream out_file;
-
 void signalHandler(int signum)
 {
-    out_file << "X, dfid, " << fileName << ", \"";
-    out_file << line << "\", " << "na, na, na, na" << endl;
+    cout << "X, dfid, 11-puzzle " << ", \"";
+    cout << "\", " << "na, na, na, na, na"; 
+    cout << endl;
 
    exit(signum);  
 }
-
 // FORWARD DECLARATION FOR FUNCTIONS
 int iddfs(state_t);
 int dfs(state_t, int,int,int);
@@ -27,13 +24,12 @@ int dfs(state_t, int,int,int);
 long long states;
 
 int main(int argc, char **argv ) {
-    signal(SIGINT, signalHandler); 
+    signal(SIGINT, signalHandler);
     // VARIABLES FOR INPUT
     ssize_t nchars; 
     state_t state; // state_t is defined by the PSVN API. It is the type used for individual states.
-    fileName = argv[3]; 
+    string line;
     // VARIABLES FOR OUTPUT 
-    out_file.open(argv[2], std::fstream::out | std::fstream::app);
     
    // VARIABLES FOR TIME COUNT
     clock_t begin, end;
@@ -56,9 +52,9 @@ int main(int argc, char **argv ) {
     long double secs = double(end - begin)/ CLOCKS_PER_SEC;
     double gen = double(states)/secs;
 
-    out_file << "X, dfid, " << fileName << ", \"";
-    out_file << line << "\", " << cost << ", " << states;
-    out_file << ", " << secs << ", " << gen << endl;
+    cout << "X, dfid, 11-puzzle" << ", \"";
+    cout << line << "\", " << cost << ", " << states;
+    cout << ", " << secs << ", " << gen << endl;
 
     exit(0);
 }
@@ -107,11 +103,7 @@ int dfs(state_t state, int cost, int max_cost, int hist){
             new_hist = next_fwd_history(hist,rule);
             apply_fwd_rule(rule, &state, &child);
             states++;
-
-            // SHOW THE STATE AND VALUES
-            print_state(stdout, &child);
-            printf(" %s (cost %d), goal=%d\n", get_fwd_rule_label(rule), get_fwd_rule_cost(rule), is_goal(&child));
-
+            
             //CHECK IF THE STATE IS THE GOAL
             if (is_goal(&child)) { 
                 return cost++;

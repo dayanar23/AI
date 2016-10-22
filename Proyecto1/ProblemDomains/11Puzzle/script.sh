@@ -14,7 +14,7 @@ while read line
 do 
 	G="$line"
 	if [ \( $i -le $C \) ]; then
-		timeout -s 2 10m ./$1 "$G" $F $3
+		timeout -s 2 5m ./$1 "$G" >> $F
 	fi
 	i=$(($i +1))
 done < $2

@@ -22,29 +22,14 @@ Copyright (C) 2013 by the PSVN Research Group, University of Alberta
 using namespace std;
 
 long long states; // number of states
-string line,fileName;
-ofstream out_file; 
-
-void signalHandler(int signum)
-{
-    out_file << "X, IDA*, gap" << fileName << ", \"";
-    out_file << line << "\", " << "na, na, na, na, na"; 
-    out_file << endl;
-
-   exit(signum);  
-}
 
 int main(int argc, char **argv) {
-    signal(SIGINT, signalHandler);
     state_t state, child;   // NOTE: "child" will be a predecessor of state, not a successor
     int d, ruleid;
     ruleid_iterator_t iter;
-
+    string line;
     PriorityQueue<state_t> open; // used for the states we have generated but not yet expanded (the OPEN list)
     state_map_t *map = new_state_map(); // contains the cost-to-goal for all states that have been generated
-    fileName = argv[3]; 
-    // VARIABLES FOR OUTPUT 
-    out_file.open(argv[2], std::fstream::out | std::fstream::app);
 
     // VARIABLES FOR TIME COUNT
     clock_t begin, end;
@@ -114,9 +99,9 @@ int main(int argc, char **argv) {
     double secs = double(end - begin)/CLOCKS_PER_SEC;
     double gen = double(states)/secs;
 
-    out_file << "X, IDA*, gap, " << fileName << ", \"";
-    out_file << line << "\", " << d << ", " << bound << ", ";
-    out_file  << states << ", " << secs << ", " << gen << endl;
+    cout << "X, IDA*, gap, " << fileName << ", \"";
+    cout << line << "\", " << d << ", " << bound << ", ";
+    cout  << states << ", " << secs << ", " << gen << endl;
     
     return 0;
 }

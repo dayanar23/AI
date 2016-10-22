@@ -1,0 +1,81 @@
+group, algorithm, domain, instance, cost, generated, time, states for sec 
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle, "1 2 B 3 6 4 7 8 5 9 10 11", 25, 121107226, 21.32, 5.68045e+06
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle, "1 2 B 3 4 5 9 11 8 7 6 10", 13, 61127, 0.01, 6.1127e+06
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle, "3 2 5 6 4 10 1 7 8 9 B 11", 27, 570271381, 100.04, 5.70043e+06
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle, "B 3 2 4 1 5 6 7 8 9 10 11", 23, 21642836, 3.79, 5.71051e+06
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle, "3 5 4 6 2 1 7 10 8 9 B 11", 27, 644077178, 84.48, 7.62402e+06
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle, "3 1 2 6 4 5 7 10 8 9 B 11", 25, 188257311, 33.03, 5.69959e+06
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle, "3 2 B 4 1 5 6 7 8 9 10 11", 21, 7889878, 1.37, 5.75904e+06
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle, "1 2 B 3 4 11 7 8 5 6 9 10", 23, 31669103, 5.54, 5.71644e+06
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle, "1 4 2 3 5 8 6 10 7 9 B 11", 25, 186337159, 32.84, 5.67409e+06
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle, "1 2 5 3 4 8 7 9 11 6 B 10", 25, 137694849, 24.21, 5.68752e+06
+X, dfid, 11-puzzle, "3 5 B 7 2 1 4 6 8 9 10 11", 15, 256185, 0.04, 6.40462e+06
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle, "1 2 5 3 4 8 7 11 B 6 9 10", 19, 2126893, 0.37, 5.74836e+06
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle, "1 2 5 6 3 4 7 10 8 9 B 11", 25, 179169184, 31.49, 5.68972e+06
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle, "5 8 2 3 6 1 4 11 B 9 7 10", 19, 2662464, 0.46, 5.78797e+06
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle, "1 4 2 3 7 5 6 10 8 9 B 11", 27, 438582745, 77.09, 5.68923e+06
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle , "", na, na, na, na, na
+X, dfid, 11-puzzle, "1 2 B 3 4 5 6 7 8 9 10 11", 1, 12, 0, inf

@@ -26,6 +26,10 @@ psvn2c_abstraction.c:
 	$(CXX) $(OPT) ../global/a_star.cpp -include $< -o $@
 	rm -f $*.c
 
+%.a_star_m: %.c ../global/a_star_m.cpp
+	$(CXX) $(OPT) ../global/a_star_m.cpp -include $< -o $@
+	rm -f $*.c
+
 %.dist: %.c ../global/dist.cpp
 	$(CXX) $(OPT) ../global/dist.cpp -include $< -o $@
 	rm -f $*.c
@@ -36,6 +40,10 @@ psvn2c_abstraction.c:
 
 %.ida_star_gap: %.c ../global/ida_star_gap.cpp
 	$(CXX) $(OPT) ../global/ida_star_gap.cpp -include $< -o $@
+	rm -f $*.c
+
+%.otro: %.c otro.cpp
+	$(CXX) $(OPT) otro.cpp -include $< -o $@
 	rm -f $*.c
 
 .PHONY: clean

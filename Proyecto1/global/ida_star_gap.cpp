@@ -5,16 +5,15 @@
 #include <string>
 #include <time.h>
 #include <csignal>
-#include "heuristics.h"
+#include <climits>
+//#include "heuristics.h"
 
 using namespace std;
 
-long long states;
+long long int states;
 
-
-// FORWARD DECLARATIONS
-int ida_star(state_t);
-int f_bounded_dfs_visit(state_t, int, int, int);
+// FORWARD DECLARATION
+pair<int,bool> f_bounded_dfs_visit(state_t, int, int, int);
 
 void signalHandler(int signum)
 {
@@ -24,6 +23,23 @@ void signalHandler(int signum)
 
    exit(signum);  
 }
+
+int gaps(state_t state){
+
+    int i = 0;
+    int h = 0;
+
+    while (i < 27){
+
+        if ( abs(state.vars[i] - state.vars[i+1]) != 1 )
+            h++;
+        i++;
+
+    }
+
+    return h;
+}
+
 
 int main(int argc, char **argv){
     
@@ -40,13 +56,22 @@ int main(int argc, char **argv){
     // READ A LINE AND BUILD STATE
     read_state(line.c_str(),&state);
 
-    int cost;
-    int bound = gaps(&state);
+    pair<int,bool> cost;
+    int bound = gaps(state);
+    int h = bound;
 
+    states = 0;
     // BEGIN THE CLOCK
     begin = clock();
 
-    cost = ida_star(state);
+    while (true) {
+        cost = f_bounded_dfs_visit(state, init_history, 0, bound);
+        if (cost.second){
+            break;
+        }
+        bound = cost.first;
+    }
+
     // END THE CLOCK        
     end = clock();
 
@@ -55,84 +80,57 @@ int main(int argc, char **argv){
     double gen = double(states)/secs;
 
     cout << "X, IDA*, gap, pancakes28" << ", \"";
-    cout << line << "\", " << cost << ", " << bound << ", ";
+    cout << line << "\", " << cost.first << ", " << bound << ", ";
     cout  << states << ", " << secs << ", " << gen << endl;
     
     
     return 0;
 }
 
+std::pair<int,bool> f_bounded_dfs_visit(state_t state, int hist, int h, int bound){
 
-int ida_star(state_t state){
-
-    // VARIABLES FOR IDA* SEARCH
-    states = 0;
-    int bound = 0;
-    int cost;
-    int hist = init_history;
-
-    // IDA* LOOP
-    while(true){
-
-        cost = f_bounded_dfs_visit(state, hist, 0, bound);
-
-        if (cost!= -1) {
-            return cost;
-        }
-
-        bound++;
-    }
-}
-
-int f_bounded_dfs_visit(state_t state, int hist, int cost, int bound){
-    
-    // BASE CASES
-    int h = gaps(&state);
-    int f = cost + h;
-
-    if (f > bound) {
-        return -f;
-    }
-
-    // CHECK IF THE STATE IS THE GOAL
-    if (is_goal(&state)) 
-        {
-            return cost;
-        }  
+    std::pair<int,bool> max_cost;
 
     // VARIABLES FOR ITERATING THROUGH state's SUCCESSORS
-    // ruleid_terator_t is the type defined by the PSVN API successor/predecessor iterators.
-    ruleid_iterator_t iter; 
-    int rule; // an iterator returns a number identifying a rule
-    int new_hist;
     state_t child;
-    int new_cost;
+    ruleid_iterator_t iter; // ruleid_terator_t is the type defined by the PSVN API successor/predecessor iterators.
+    int ruleid, new_hist; 
+    int t;
 
-    init_fwd_iter(&iter,&state);
-
-    // LOOP THOUGH THE CHILDREN ONE BY ONE
-    while((rule = next_ruleid(&iter)) >= 0) {
-        
-        if (fwd_rule_valid_for_history(hist,rule)) {
-
-            new_hist = next_fwd_history(hist,rule);
-
-            // GENERATE CHILD STATE
-            apply_fwd_rule(rule, &state, &child);
-
-            states++;
-            // SHOW THE STATE AND VALUES
-            print_state(stdout, &child);
-            printf(" %s (cost %d), goal=%d\n", get_fwd_rule_label(rule), get_fwd_rule_cost(rule), is_goal(&child));
-
-            // RECURSION OF THE FUNCTION
-            new_cost = f_bounded_dfs_visit(child, new_hist, cost++, bound);         
-
-            if (new_cost != -1) {
-                return new_cost;
-            }
-        }
+    int f = h + gaps(state);
+    if (f > bound){
+        max_cost.first = f;
+        max_cost.second = false;
+        return max_cost;
     }
 
-    return -1;
+    if (is_goal(&state)) {
+        max_cost.first = h;
+        max_cost.second = true;
+        return max_cost;
+    }
+
+    t = INT_MAX;
+
+    // LOOP THOUGH THE CHILDREN ONE BY ONE
+    init_fwd_iter(&iter, &state);  // initialize the child iterator
+
+    while ( (ruleid = next_ruleid(&iter)) >= 0 ){
+        if (!fwd_rule_valid_for_history(hist,ruleid)){continue;} 
+        new_hist = next_fwd_history(hist,ruleid);
+        apply_fwd_rule(ruleid, &state, &child);
+        ++states; 
+        max_cost = f_bounded_dfs_visit(child, new_hist, h+1, bound);
+
+        if (max_cost.second) {
+            return max_cost;
+        }
+
+        t = min(t,max_cost.first);
+
+        }
+
+    max_cost.first = t;
+    max_cost.second = false;
+    return max_cost;
 }

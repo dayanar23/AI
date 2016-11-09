@@ -56,4 +56,101 @@ int minmax(state_t state, int depth, bool use_tt) {
     return score;
 }
 
+int negamax(state_t state, int depth, int color, bool use_tt){
+
+    int alpha;
+    state_t chlid;
+
+    // check if the state is a terminal node
+    if(state.terminal()){
+        return color * state.value();
+    }
+
+    // alpha starts with the min possible value
+    alpha = std::numeric_limits<int>::min();
+
+    if (use_tt){
+        return 0;
+    } else {
+
+        // vector of valid moves (child vector)
+        std::vector<int> valid_moves;
+
+        // full de vector // DIM tam del vector
+        for( int pos = 0; pos < DIM; ++pos ) {
+            if( (color && state.is_black_move(pos)) || (!color && state.is_white_move(pos)) ) {
+                valid_moves.push_back(pos);
+            }
+        }
+
+        // negamax loop
+        for(int m : valid_moves){
+            if (color == 1){
+                chlid = state.black_move(m);
+            }
+            else{
+                chlid = state.white_move(m);
+            }
+            alpha = std::max(alpha, -negamax(chlid, depth-1, -color, use_tt));
+            expanded++;
+        }
+    }
+
+    return alpha;
+}
+
+
+int negamax(state_t state, int depth, int alpha, int beta, int color, bool use_tt){
+
+    int val, score;
+    state_t chlid;
+
+    // check if the state is a terminal node
+    if(state.terminal()){
+        return color * state.value();
+    }
+
+    // alpha starts with the min possible value
+    score = std::numeric_limits<int>::min();
+
+    if (use_tt){
+        return 0;
+    } else {
+        // vector of valid moves
+        std::vector<int> valid_moves;
+
+        // full de vector
+        for( int pos = 0; pos < DIM; ++pos ) {
+            if( (color && state.is_black_move(pos)) || (!color && state.is_white_move(pos)) ) {
+                valid_moves.push_back(pos);
+            }
+        }
+
+        // negamax loop
+        for(int m : valid_moves){
+            if (color == 1){
+                chlid = state.black_move(m);
+            }
+            else{
+                chlid = state.white_move(m);
+            }
+
+            val = - negamax(chlid, depth-1, -beta, -alpha, -color, use_tt);
+            expanded++;
+            score = std::max( score, val);
+            alpha = std::max(alpha, val);
+
+            if (alpha >= beta){
+                break;
+            }
+
+        }
+    }
+
+    return alpha;
+}
+
+
+
+
 #endif

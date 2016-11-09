@@ -177,10 +177,10 @@ inline bool state_t::outflank(bool color, int pos) const {
     const int *x = rows[pos - 4];
 
     //std::cout << "pos: " << pos - 4 << std::endl;
-    for (const int *i = x; *i != -1; ++i)
+    /*for (const int *i = x; *i != -1; ++i)
     {
         std::cout << " " << *i;
-    }
+    }*/
 
     while( *x != pos ) ++x;
     if( *(x+1) != -1 ) {
@@ -198,11 +198,11 @@ inline bool state_t::outflank(bool color, int pos) const {
     // Check columns
     x = cols[pos - 4];
     //std::cout << std::endl << "cols: " << std::endl;
-    for (const int *i = x; *i != -1; ++i)
+    /*for (const int *i = x; *i != -1; ++i)
     {
         std::cout << " " << *i;
     }
-    std::cout << std::endl;
+    std::cout << std::endl;*/
 
     while( *x != pos ) ++x;
     // Calcula si en columna de la posicion dada hay otra ficha para tomar las
@@ -261,6 +261,7 @@ inline bool state_t::outflank(bool color, int pos) const {
         //std::cout << "dia22" << *p << std::endl;
         if( (p < x - 1) && (p >= dia2[pos - 4]) && !is_free(*p) ) return true;
     }
+    return false;
 }
 
 inline void state_t::set_color(bool color, int pos) {
@@ -285,7 +286,7 @@ inline state_t state_t::move(bool color, int pos) const {
     state_t s(*this);
     if( pos >= DIM ) return s;
 
-    assert(outflank(color, pos));
+    //assert(outflank(color, pos));
     s.set_color(color, pos);
 
     // Flip color of outflanked stones

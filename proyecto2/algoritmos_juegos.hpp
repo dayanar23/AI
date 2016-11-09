@@ -58,8 +58,10 @@ int minmax(state_t state, int depth, bool use_tt) {
 
 int negamax(state_t state, int depth, int color, bool use_tt){
 
-    int alpha;
-    state_t chlid;
+    int alpha; // int for the result
+    state_t child_t; // next state
+    bool turn = color == 1; // player black (true) or white (false)
+    bool moves = false; // has possible moves
 
     // check if the state is a terminal node
     if(state.terminal()){
@@ -69,31 +71,20 @@ int negamax(state_t state, int depth, int color, bool use_tt){
     // alpha starts with the min possible value
     alpha = std::numeric_limits<int>::min();
 
-    if (use_tt){
-        return 0;
-    } else {
-
-        // vector of valid moves (child vector)
-        std::vector<int> valid_moves;
-
-        // full de vector // DIM tam del vector
-        for( int pos = 0; pos < DIM; ++pos ) {
-            if( (color && state.is_black_move(pos)) || (!color && state.is_white_move(pos)) ) {
-                valid_moves.push_back(pos);
-            }
-        }
-
-        // negamax loop
-        for(int m : valid_moves){
-            if (color == 1){
-                chlid = state.black_move(m);
-            }
-            else{
-                chlid = state.white_move(m);
-            }
-            alpha = std::max(alpha, -negamax(chlid, depth-1, -color, use_tt));
+    // negamax loop 
+    for( int pos = 0; pos < DIM; ++pos ) {
+        if (state.outflank(turn, pos)) {
+            child_t = state.move(turn, pos);
+            generated++;
+            moves = true;
+            alpha = std::max(alpha, -negamax(child_t, depth-1, -color, use_tt));
             expanded++;
         }
+    }
+
+    // if not possible moves, play the same player
+    if(!moves){
+        alpha = std::max(alpha, -negamax(state, depth-1, -color, use_tt));
     }
 
     return alpha;
@@ -102,8 +93,10 @@ int negamax(state_t state, int depth, int color, bool use_tt){
 
 int negamax(state_t state, int depth, int alpha, int beta, int color, bool use_tt){
 
-    int val, score;
-    state_t chlid;
+    int val, score; // aux variables for calculate result
+    state_t child_t; // next state
+    bool turn = color == 1; // player black (true) or white (false)
+    bool moves = false; // has possible moves
 
     // check if the state is a terminal node
     if(state.terminal()){
@@ -113,38 +106,28 @@ int negamax(state_t state, int depth, int alpha, int beta, int color, bool use_t
     // alpha starts with the min possible value
     score = std::numeric_limits<int>::min();
 
-    if (use_tt){
-        return 0;
-    } else {
-        // vector of valid moves
-        std::vector<int> valid_moves;
-
-        // full de vector
-        for( int pos = 0; pos < DIM; ++pos ) {
-            if( (color && state.is_black_move(pos)) || (!color && state.is_white_move(pos)) ) {
-                valid_moves.push_back(pos);
-            }
-        }
-
-        // negamax loop
-        for(int m : valid_moves){
-            if (color == 1){
-                chlid = state.black_move(m);
-            }
-            else{
-                chlid = state.white_move(m);
-            }
-
-            val = - negamax(chlid, depth-1, -beta, -alpha, -color, use_tt);
+    // negamax loop
+    for( int pos = 0; pos < DIM; ++pos ) {
+        if (state.outflank(turn, pos)) {
+            child_t = state.move(turn, pos);
+            generated++;
+            moves = true;
+            val = - negamax(child_t, depth-1, -beta, -alpha, -color, use_tt);
             expanded++;
-            score = std::max( score, val);
+            score = std::max(score, val);
             alpha = std::max(alpha, val);
 
             if (alpha >= beta){
                 break;
             }
-
         }
+    }
+
+    // if not possible moves, play the same player
+    if (!moves) {
+        val = -negamax(state, depth + 1, -beta, -alpha, -color, use_tt);
+        score = std::max(score, val);
+        alpha = std::max(alpha, val);
     }
 
     return alpha;

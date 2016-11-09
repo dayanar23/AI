@@ -1,17 +1,17 @@
 /*
  *  Copyright (C) 2012 Universidad Simon Bolivar
- * 
+ *
  *  Permission is hereby granted to distribute this software for
  *  non-commercial research purposes, provided that this copyright
  *  notice is included with any such distribution.
- *  
+ *
  *  THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
  *  EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE
  *  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
  *  PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE
  *  SOFTWARE IS WITH YOU.  SHOULD THE PROGRAM PROVE DEFECTIVE, YOU
  *  ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
- *  
+ *
  *  Blai Bonet, bonet@ldc.usb.ve
  *
  *  Last revision: 1/11/2016
@@ -91,7 +91,7 @@ static int PV[] = {
 };
 
 class state_t {
-    unsigned char t_; 
+    unsigned char t_;
     unsigned free_;
     unsigned pos_;
 
@@ -168,39 +168,99 @@ inline bool state_t::terminal() const {
 }
 
 inline bool state_t::outflank(bool color, int pos) const {
-    if( !is_free(pos) ) return false;
+        if( !is_free(pos) ) return false;
 
     const int *p = 0;
 
     // Find if some stones are outflanked
-
     // Check rows
     const int *x = rows[pos - 4];
+
+    //std::cout << "pos: " << pos - 4 << std::endl;
+    for (const int *i = x; *i != -1; ++i)
+    {
+        std::cout << " " << *i;
+    }
+
     while( *x != pos ) ++x;
     if( *(x+1) != -1 ) {
         for( p = x + 1; (*p != -1) && !is_free(*p) && (color ^ is_black(*p)); ++p );
+        //std::cout << std::endl << "rows1 " << *p << std::endl;
         if( (p > x + 1) && (*p != -1) && !is_free(*p) ) return true;
     }
     if( x != rows[pos - 4] ) {
         for( p = x - 1; (p >= rows[pos - 4]) && !is_free(*p) && (color ^ is_black(*p)); --p );
+        //std::cout << "rows2 " << *p << std::endl;
         if( (p < x - 1) && (p >= rows[pos - 4]) && !is_free(*p) ) return true;
     }
 
+
     // Check columns
     x = cols[pos - 4];
+    //std::cout << std::endl << "cols: " << std::endl;
+    for (const int *i = x; *i != -1; ++i)
+    {
+        std::cout << " " << *i;
+    }
+    std::cout << std::endl;
+
     while( *x != pos ) ++x;
+    // Calcula si en columna de la posicion dada hay otra ficha para tomar las
+    // fichas del oponente.
     if( *(x+1) != -1 ) {
+        // Revisa las columnas en forma ascendente.
         for( p = x + 1; (*p != -1) && !is_free(*p) && (color ^ is_black(*p)); ++p );
+        //std::cout << "cols1 " << *p << std::endl;
         if( (p > x + 1) && (*p != -1) && !is_free(*p) ) return true;
     }
+    // Revisa las columnas en forma descendente.
     if( x != cols[pos - 4] ) {
         for( p = x - 1; (p >= cols[pos - 4]) && !is_free(*p) && (color ^ is_black(*p)); --p );
+        //std::cout << "cols2 " << *p << std::endl;
         if( (p < x - 1) && (p >= cols[pos - 4]) && !is_free(*p) ) return true;
     }
 
-    // [CHECK OVER DIAGONALS REMOVED]
 
-    return false;
+    // Revisar las diagonales
+    x = dia1[pos - 4];
+    //std::cout << std::endl << "dia1: " << std::endl;
+    /*for (const int *i = x; *i != -1; ++i)
+    {
+        std::cout << " " << *i;
+    }
+    std::cout << std::endl;*/
+
+    while( *x != pos ) ++x;
+    if( *(x+1) != -1 ) {
+        for( p = x + 1; (*p != -1) && !is_free(*p) && (color ^ is_black(*p)); ++p );
+        //std::cout << "dia11 " << *p << std::endl;
+        if( (p > x + 1) && (*p != -1) && !is_free(*p) ) return true;
+    }
+
+    if( x != dia1[pos - 4] ) {
+        for( p = x - 1; (p >= dia1[pos - 4]) && !is_free(*p) && (color ^ is_black(*p)); --p );
+        //std::cout << "dia12 " << *p << std::endl;
+        if( (p < x - 1) && (p >= dia1[pos - 4]) && !is_free(*p) ) return true;
+    }
+
+    x = dia2[pos - 4];
+    //std::cout << std::endl << "dia2: " << std::endl;
+    /*for (const int *i = x; *i != -1; ++i)
+    {
+        std::cout << " " << *i;
+    }*/
+
+    while( *x != pos ) ++x;
+    if( *(x+1) != -1 ) {
+        for( p = x + 1; (*p != -1) && !is_free(*p) && (color ^ is_black(*p)); ++p );
+        //std::cout << "dia21 " << *p << std::endl;
+        if( (p > x + 1) && (*p != -1) && !is_free(*p) ) return true;
+    }
+    if( x != dia2[pos - 4] ) {
+        for( p = x - 1; (p >= dia2[pos - 4]) && !is_free(*p) && (color ^ is_black(*p)); --p );
+        //std::cout << "dia22" << *p << std::endl;
+        if( (p < x - 1) && (p >= dia2[pos - 4]) && !is_free(*p) ) return true;
+    }
 }
 
 inline void state_t::set_color(bool color, int pos) {
@@ -262,7 +322,36 @@ inline state_t state_t::move(bool color, int pos) const {
         }
     }
 
-    // [PROCESS OF DIAGONALS REMOVED]
+    // Revisa las diagonales
+        x = dia1[pos - 4];
+    while( *x != pos ) ++x;
+    if( *(x+1) != -1 ) {
+        for( p = x + 1; (*p != -1) && !is_free(*p) && (color ^ is_black(*p)); ++p );
+        if( (p > x + 1) && (*p != -1) && !is_free(*p) ) {
+            for( const int *q = x + 1; q < p; ++q ) s.set_color(color, *q);
+        }
+    }
+    if( x != dia1[pos - 4] ) {
+        for( p = x - 1; (p >= dia1[pos - 4]) && !is_free(*p) && (color ^ is_black(*p)); --p );
+        if( (p < x - 1) && (p >= dia1[pos - 4]) && !is_free(*p) ) {
+            for( const int *q = x - 1; q > p; --q ) s.set_color(color, *q);
+        }
+    }
+
+    x = dia2[pos - 4];
+    while( *x != pos ) ++x;
+    if( *(x+1) != -1 ) {
+        for( p = x + 1; (*p != -1) && !is_free(*p) && (color ^ is_black(*p)); ++p );
+        if( (p > x + 1) && (*p != -1) && !is_free(*p) ) {
+            for( const int *q = x + 1; q < p; ++q ) s.set_color(color, *q);
+        }
+    }
+    if( x != dia2[pos - 4] ) {
+        for( p = x - 1; (p >= dia2[pos - 4]) && !is_free(*p) && (color ^ is_black(*p)); --p );
+        if( (p < x - 1) && (p >= dia2[pos - 4]) && !is_free(*p) ) {
+            for( const int *q = x - 1; q > p; --q ) s.set_color(color, *q);
+        }
+    }
 
     return s;
 }

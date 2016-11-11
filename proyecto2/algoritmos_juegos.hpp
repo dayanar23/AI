@@ -7,7 +7,6 @@
 //int maxmin(state_t state, int depth, bool use_tt);
 int minmax(state_t state, int depth, bool use_tt);
 
-
 int maxmin(state_t state, int depth, bool use_tt) {
     //std::cout << "Mi valor maxmin" << state.value();
     if (state.terminal()) return state.value();
@@ -136,27 +135,40 @@ int negamax(state_t state, int depth, int alpha, int beta, int color, bool use_t
     return alpha;
 }
 
+bool comparar_igual(int x, int y) {
+    return x >= y;
+}
 
-bool test(state_t state, int color, int score) {
+bool comparar(int x, int y) {
+    return x > y;
+}
+
+
+bool test(state_t state, int color, int score, bool (*comparar)(int,int)) {
     if (state.terminal()) {
-        return (state.value() >= score) ? true : false;
+        return ((*comparar)(state.value(),score)) ? true : false;
     }
-    bool _color = ( color == 1 ) ? true : false;
 
+    bool _color = ( color == 1 ) ? true : false;
+    bool jugado = false;
     state_t hijo;
     for (int i = 4; i < DIM; i += 1)
     {
         if (state.outflank(_color,i)) {
             hijo = state.move(_color,i);
+            jugado = true;
             // Las fichas negras son el jugador Max
-            if (_color  && test(hijo,-color,score))
+            if (_color  && test(hijo,-color,score,comparar))
                 return true;
 
             // Las fichas blancas son el jugador Min
-            if ((!_color) && (!test(hijo,-color,score)))
+            if ((!_color) && (!test(hijo,-color,score,comparar)))
                 return false;
         }
     }
+    if (!jugado)
+        return test(state,-color,score,comparar);
+
     return !_color;
 }
 
@@ -182,11 +194,11 @@ int scout(state_t state, int depth, int color, bool use_tt = false) {
             }
             else {
                     // Las fichas negras son el jugador Max
-                if (_color && test(hijo,-color,score))
+                if (_color && test(hijo,-color,score,comparar))
                     score = scout(hijo,depth+1,-color,use_tt);
 
                 // Las fichas blancas son el jugador Min
-                if ((!_color) && (!test(hijo,-color,score)))
+                if ((!_color) && (!test(hijo,-color,score,comparar_igual)))
                     score = scout(hijo,depth+1,-color,use_tt);
             }
         }

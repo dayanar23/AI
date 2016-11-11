@@ -14,7 +14,7 @@ int maxmin(state_t state, int depth, bool use_tt) {
 
     bool jugado = false;
     int score = std::numeric_limits<int>::min();
-    for (int i = 4; i < 36 ; i += 1)
+    for (int i = 4; i < DIM ; i += 1)
     {
         // El jugador max son las fichas negras
         if (state.outflank(true,i)) {
@@ -38,7 +38,7 @@ int minmax(state_t state, int depth, bool use_tt) {
 
     //bool no_pass = false;
     int score = std::numeric_limits<int>::max();
-    for (int i = 4; i < 36 ; i += 1)
+    for (int i = 4; i < DIM ; i += 1)
     {
         // El jugador min son las fichas blancas
         if (state.outflank(false,i)) {
@@ -71,7 +71,7 @@ int negamax(state_t state, int depth, int color, bool use_tt){
     // alpha starts with the min possible value
     alpha = std::numeric_limits<int>::min();
 
-    // negamax loop 
+    // negamax loop
     for( int pos = 0; pos < DIM; ++pos ) {
         if (state.outflank(turn, pos)) {
             child_t = state.move(turn, pos);
@@ -133,6 +133,67 @@ int negamax(state_t state, int depth, int alpha, int beta, int color, bool use_t
     return alpha;
 }
 
+
+bool test(state_t state, int color, int score) {
+    if (state.terminal()) {
+        return (state.value() >= score) ? true : false;
+    }
+    bool _color = ( color == 1 ) ? true : false;
+
+    state_t hijo;
+    for (int i = 4; i < DIM; i += 1)
+    {
+        if (state.outflank(_color,i)) {
+            hijo = state.move(_color,i);
+            // Las fichas negras son el jugador Max
+            if (_color  && test(hijo,-color,score))
+                return true;
+
+            // Las fichas blancas son el jugador Min
+            if ((!_color) && (!test(hijo,-color,score)))
+                return false;
+        }
+    }
+    return !_color;
+}
+
+int scout(state_t state, int depth, int color, bool use_tt = false) {
+    if (state.terminal()) return state.value();
+
+    int score = 0;
+    bool primerHijo = true;
+    bool _color = ( color == 1 ) ? true : false;
+    bool jugado = false;
+    state_t hijo;
+    for (int i = 4; i < DIM; i += 1)
+    {
+        // Validar la jugada.
+        if (state.outflank(_color,i))
+        {
+            generated += 1;
+            hijo = state.move(_color,i);
+            jugado = true;
+            if (primerHijo) {
+                score = scout(hijo,depth+1,-color,use_tt);
+                primerHijo = false;
+            }
+            else {
+                    // Las fichas negras son el jugador Max
+                if (_color && test(hijo,-color,score))
+                    score = scout(hijo,depth+1,-color,use_tt);
+
+                // Las fichas blancas son el jugador Min
+                if ((!_color) && (!test(hijo,-color,score)))
+                    score = scout(hijo,depth+1,-color,use_tt);
+            }
+        }
+    }
+    expanded +=1;
+    if (!jugado)
+        score = scout(state,depth+1,-color,use_tt);
+
+    return score;
+}
 
 
 

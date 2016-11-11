@@ -87,7 +87,7 @@ int main(int argc, const char **argv) {
 
     // Run algorithm along PV (bacwards)
     cout << "Moving along PV:" << endl;
-    for( int i = 0; i <= 8; ++i ) {
+    for( int i = 0; i <= npv; ++i ) {
         //cout << pv[i];
         int value = 0;
         TTable[0].clear();

@@ -78,7 +78,7 @@ int negamax(state_t state, int depth, int color, bool use_tt){
             generated++;
             moves = true;
             alpha = std::max(alpha, -negamax(child_t, depth-1, -color, use_tt));
-            expanded++;
+
         }
     }
 
@@ -86,6 +86,8 @@ int negamax(state_t state, int depth, int color, bool use_tt){
     if(!moves){
         alpha = std::max(alpha, -negamax(state, depth-1, -color, use_tt));
     }
+
+    expanded++;
 
     return alpha;
 }
@@ -113,7 +115,7 @@ int negamax(state_t state, int depth, int alpha, int beta, int color, bool use_t
             generated++;
             moves = true;
             val = - negamax(child_t, depth-1, -beta, -alpha, -color, use_tt);
-            expanded++;
+
             score = std::max(score, val);
             alpha = std::max(alpha, val);
 
@@ -129,6 +131,7 @@ int negamax(state_t state, int depth, int alpha, int beta, int color, bool use_t
         score = std::max(score, val);
         alpha = std::max(alpha, val);
     }
+    expanded++;
 
     return alpha;
 }
@@ -188,9 +191,11 @@ int scout(state_t state, int depth, int color, bool use_tt = false) {
             }
         }
     }
-    expanded +=1;
+
     if (!jugado)
         score = scout(state,depth+1,-color,use_tt);
+
+    expanded +=1;
 
     return score;
 }

@@ -213,5 +213,53 @@ int scout(state_t state, int depth, int color, bool use_tt = false) {
 }
 
 
+int negascout(state_t state, int depth, int alpha, int beta, int color, bool use_tt){
+    int score; // aux variables for calculate result
+    state_t child_t; // next state
+    bool turn = color == 1; // player black (true) or white (false)
+    bool moves = false; // has possible moves
+    bool isFirst = true;
+
+    // check if the state is a terminal node
+    if(state.terminal()){
+        return color * state.value();
+    }
+
+    // negamax loop
+    for( int pos = 0; pos < DIM; ++pos ) {
+        if (state.outflank(turn, pos)) {
+            child_t = state.move(turn, pos);
+            generated++;
+            moves = true;
+
+            if (isFirst) {
+                isFirst = false;
+                score = - negascout(child_t, depth - 1, -beta, -alpha, -color, use_tt);
+            }
+            else {
+                score = - negascout(child_t, depth - 1, -alpha - 1, -alpha, -color, use_tt);
+            
+                if (alpha < score && score < beta) {
+                    score = - negascout(child_t, depth - 1, -beta, -score, -color, use_tt);
+                    alpha = std::max(alpha, score);
+
+                    if (alpha >= beta) {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    /*if (!moves) {
+        score = - negascout(child_t, depth - 1, -beta, -alpha, -color, use_tt);
+        score = - negascout(child_t, depth - 1, -beta, -score, -color, use_tt);
+        alpha = std::max(alpha, score);
+    }*/
+
+    expanded++;
+
+    return alpha;
+}
 
 #endif

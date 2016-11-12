@@ -130,6 +130,7 @@ int negamax(state_t state, int depth, int alpha, int beta, int color, bool use_t
         score = std::max(score, val);
         alpha = std::max(alpha, val);
     }
+
     expanded++;
 
     return alpha;
@@ -240,22 +241,23 @@ int negascout(state_t state, int depth, int alpha, int beta, int color, bool use
                 score = - negascout(child_t, depth - 1, -alpha - 1, -alpha, -color, use_tt);
             
                 if (alpha < score && score < beta) {
-                    score = - negascout(child_t, depth - 1, -beta, -score, -color, use_tt);
-                    alpha = std::max(alpha, score);
+                   score = - negascout(child_t, depth - 1, -beta, -score, -color, use_tt);
+                }    
+            }
 
-                    if (alpha >= beta) {
-                        break;
-                    }
-                }
+            alpha = std::max(alpha, score);
+
+            if (alpha >= beta) {
+                break;
             }
         }
     }
 
-    /*if (!moves) {
-        score = - negascout(child_t, depth - 1, -beta, -alpha, -color, use_tt);
-        score = - negascout(child_t, depth - 1, -beta, -score, -color, use_tt);
+    if (!moves) {
+        score = - negascout(state, depth - 1, -beta, -alpha, -color, use_tt);
+
         alpha = std::max(alpha, score);
-    }*/
+    }
 
     expanded++;
 

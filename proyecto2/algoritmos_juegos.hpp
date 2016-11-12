@@ -7,14 +7,13 @@
 //int maxmin(state_t state, int depth, bool use_tt);
 int minmax(state_t state, int depth, bool use_tt);
 
-
 int maxmin(state_t state, int depth, bool use_tt) {
     //std::cout << "Mi valor maxmin" << state.value();
     if (state.terminal()) return state.value();
 
     bool jugado = false;
     int score = std::numeric_limits<int>::min();
-    for (int i = 4; i < 36 ; i += 1)
+    for (int i = 4; i < DIM ; i += 1)
     {
         // El jugador max son las fichas negras
         if (state.outflank(true,i)) {
@@ -38,7 +37,7 @@ int minmax(state_t state, int depth, bool use_tt) {
 
     //bool no_pass = false;
     int score = std::numeric_limits<int>::max();
-    for (int i = 4; i < 36 ; i += 1)
+    for (int i = 4; i < DIM ; i += 1)
     {
         // El jugador min son las fichas blancas
         if (state.outflank(false,i)) {
@@ -71,14 +70,14 @@ int negamax(state_t state, int depth, int color, bool use_tt){
     // alpha starts with the min possible value
     alpha = std::numeric_limits<int>::min();
 
-    // negamax loop 
+    // negamax loop
     for( int pos = 0; pos < DIM; ++pos ) {
         if (state.outflank(turn, pos)) {
             child_t = state.move(turn, pos);
             generated++;
             moves = true;
             alpha = std::max(alpha, -negamax(child_t, depth-1, -color, use_tt));
-            expanded++;
+
         }
     }
 
@@ -86,6 +85,8 @@ int negamax(state_t state, int depth, int color, bool use_tt){
     if(!moves){
         alpha = std::max(alpha, -negamax(state, depth-1, -color, use_tt));
     }
+
+    expanded++;
 
     return alpha;
 }
@@ -113,7 +114,7 @@ int negamax(state_t state, int depth, int alpha, int beta, int color, bool use_t
             generated++;
             moves = true;
             val = - negamax(child_t, depth-1, -beta, -alpha, -color, use_tt);
-            expanded++;
+
             score = std::max(score, val);
             alpha = std::max(alpha, val);
 
@@ -129,6 +130,136 @@ int negamax(state_t state, int depth, int alpha, int beta, int color, bool use_t
         score = std::max(score, val);
         alpha = std::max(alpha, val);
     }
+
+    expanded++;
+
+    return alpha;
+}
+
+bool comparar_igual(int x, int y) {
+    return x >= y;
+}
+
+bool comparar(int x, int y) {
+    return x > y;
+}
+
+
+bool test(state_t state, int color, int score, bool (*comparar)(int,int)) {
+    if (state.terminal()) {
+        return ((*comparar)(state.value(),score)) ? true : false;
+    }
+
+    bool _color = ( color == 1 ) ? true : false;
+    bool jugado = false;
+    state_t hijo;
+    for (int i = 4; i < DIM; i += 1)
+    {
+        if (state.outflank(_color,i)) {
+            hijo = state.move(_color,i);
+            jugado = true;
+            // Las fichas negras son el jugador Max
+            if (_color  && test(hijo,-color,score,comparar))
+                return true;
+
+            // Las fichas blancas son el jugador Min
+            if ((!_color) && (!test(hijo,-color,score,comparar)))
+                return false;
+        }
+    }
+    if (!jugado)
+        return test(state,-color,score,comparar);
+
+    return !_color;
+}
+
+int scout(state_t state, int depth, int color, bool use_tt = false) {
+    if (state.terminal()) return state.value();
+
+    int score = 0;
+    bool primerHijo = true;
+    bool _color = ( color == 1 ) ? true : false;
+    bool jugado = false;
+    state_t hijo;
+    for (int i = 4; i < DIM; i += 1)
+    {
+        // Validar la jugada.
+        if (state.outflank(_color,i))
+        {
+            generated += 1;
+            hijo = state.move(_color,i);
+            jugado = true;
+            if (primerHijo) {
+                score = scout(hijo,depth+1,-color,use_tt);
+                primerHijo = false;
+            }
+            else {
+                    // Las fichas negras son el jugador Max
+                if (_color && test(hijo,-color,score,comparar))
+                    score = scout(hijo,depth+1,-color,use_tt);
+
+                // Las fichas blancas son el jugador Min
+                if ((!_color) && (!test(hijo,-color,score,comparar_igual)))
+                    score = scout(hijo,depth+1,-color,use_tt);
+            }
+        }
+    }
+
+    if (!jugado)
+        score = scout(state,depth+1,-color,use_tt);
+
+    expanded +=1;
+
+    return score;
+}
+
+
+int negascout(state_t state, int depth, int alpha, int beta, int color, bool use_tt){
+    int score; // aux variables for calculate result
+    state_t child_t; // next state
+    bool turn = color == 1; // player black (true) or white (false)
+    bool moves = false; // has possible moves
+    bool isFirst = true;
+
+    // check if the state is a terminal node
+    if(state.terminal()){
+        return color * state.value();
+    }
+
+    // negamax loop
+    for( int pos = 0; pos < DIM; ++pos ) {
+        if (state.outflank(turn, pos)) {
+            child_t = state.move(turn, pos);
+            generated++;
+            moves = true;
+
+            if (isFirst) {
+                isFirst = false;
+                score = - negascout(child_t, depth - 1, -beta, -alpha, -color, use_tt);
+            }
+            else {
+                score = - negascout(child_t, depth - 1, -alpha - 1, -alpha, -color, use_tt);
+            
+                if (alpha < score && score < beta) {
+                   score = - negascout(child_t, depth - 1, -beta, -score, -color, use_tt);
+                }    
+            }
+
+            alpha = std::max(alpha, score);
+
+            if (alpha >= beta) {
+                break;
+            }
+        }
+    }
+
+    if (!moves) {
+        score = - negascout(state, depth - 1, -beta, -alpha, -color, use_tt);
+
+        alpha = std::max(alpha, score);
+    }
+
+    expanded++;
 
     return alpha;
 }

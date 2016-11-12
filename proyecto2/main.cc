@@ -85,6 +85,7 @@ int main(int argc, const char **argv) {
     }
     cout << (use_tt ? " w/ transposition table" : "") << endl;
 
+
     // Run algorithm along PV (bacwards)
     cout << "Moving along PV:" << endl;
     for( int i = 0; i <= npv; ++i ) {

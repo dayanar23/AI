@@ -133,7 +133,4 @@ int negamax(state_t state, int depth, int alpha, int beta, int color, bool use_t
     return alpha;
 }
 
-
-
-
 #endif

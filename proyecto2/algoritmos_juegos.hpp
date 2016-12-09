@@ -13,7 +13,7 @@ int maxmin(state_t state, int depth, bool use_tt) {
 
     bool jugado = false;
     int score = std::numeric_limits<int>::min();
-    for (int i = 4; i < DIM ; i += 1)
+    for (int i = 0; i < DIM ; i += 1)
     {
         // El jugador max son las fichas negras
         if (state.outflank(true,i)) {
@@ -37,7 +37,7 @@ int minmax(state_t state, int depth, bool use_tt) {
 
     //bool no_pass = false;
     int score = std::numeric_limits<int>::max();
-    for (int i = 4; i < DIM ; i += 1)
+    for (int i = 0; i < DIM ; i += 1)
     {
         // El jugador min son las fichas blancas
         if (state.outflank(false,i)) {
@@ -153,7 +153,7 @@ bool test(state_t state, int color, int score, bool (*comparar)(int,int)) {
     bool _color = ( color == 1 ) ? true : false;
     bool jugado = false;
     state_t hijo;
-    for (int i = 4; i < DIM; i += 1)
+    for (int i = 0; i < DIM; i += 1)
     {
         if (state.outflank(_color,i)) {
             hijo = state.move(_color,i);
@@ -181,7 +181,7 @@ int scout(state_t state, int depth, int color, bool use_tt = false) {
     bool _color = ( color == 1 ) ? true : false;
     bool jugado = false;
     state_t hijo;
-    for (int i = 4; i < DIM; i += 1)
+    for (int i = 0; i < DIM; i += 1)
     {
         // Validar la jugada.
         if (state.outflank(_color,i))

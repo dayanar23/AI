@@ -44,13 +44,13 @@ int main()
         cerr << "Uh oh, Sample.dat could not be opened for writing!" << endl;
         exit(1);
     }
-    // Formato traducción
+    // Comentarios
     outf << "c Descripción de las variables\nc Para instancia, existen N*M*4 variables";
     outf << "c Cada variable representa q(i,j,d), es decir, un segmento\n";
     outf << "c Correspondencia: 1 => q(i,j,N), 2 => q(i,j,S), 3 => q(i,j,W), 4 => q(i,j,E)\n";
 
     string strInput;
-    //getline(inf, strInput);
+    getline(inf, strInput);
     vector<string> x = split(strInput, ' ');
 
 
@@ -58,11 +58,12 @@ int main()
     int nroGrupo = 0;
     for (vector<string>::iterator i = x.begin(); i != x.end(); ++i, campo += 1)
     {
-        
+        // Leer el argumento N
         if (campo == 1) {
             if ( ! (istringstream(*i) >> N ) ) N  = 0;
             N = 2;
         }
+        // Leer el argumento M y generar clausulas tipo 0
         else if (campo == 2) 
         {
             if ( ! (istringstream(*i) >> M ) ) M  = 0;
@@ -92,6 +93,7 @@ int main()
             }
             outf << endl;
         } 
+        // Generar clausulas tipo 1
         if (campo > 2){
             outf << "c CLAUSULAS TIPO 1\n";
             int base = (campo - 3) * nroGrupo, despl = 0;

@@ -309,26 +309,6 @@ Tipo 5 (Los puntos deben estar bien conectados, con cero o dos incidencias)
 	LATERALES:
 
 
-
-Superior:
-	paraTodo(j) ((0 < j < M) => 
-					(-q(1,j,n) && -q(1,j,e) && -q(1,j+1,n)) ||
-					(
-						(q(1,j,e) && (q(1,j,n) || q(1,j+1,n))) ||
-						(q(1,j,n) && q(1,j+1,n))
-					)
-				
-
-Superior:
-	paraTodo(j) ((0 < j < M) => 
-					(-q(1,j,n) && -q(1,j,e) && -q(1,j+1,n)) ||
-					(
-						(q(1,j,n) && q(1,j,e)) ||
-						(q(1,j+1,n) && q(1,j,e)) ||
-						(q(1,j,n) && q(1,j+1,n))
-					)
-				
-//CNF
 Superior:
 	paraTodo(j) ((0 < j < M) => 
 					(
@@ -341,30 +321,30 @@ Superior:
 
 Inferior:
 	paraTodo(j) ((0 < j < M) => 
-					(-q(N,j,s) && -q(N,j,e) && -q(N,j+1,s)) ||
 					(
-						(q(N,j,s) && q(N,j,e)) ||
-						(q(N,j+1,s) && q(N,j,e)) ||
-						(q(N,j,s) && q(N,j+1,s))
+						(-q(N,j,s) || q(N,j,e) || q(N,j+1,s)) &&
+						(q(N,j,s) || -q(N,j,e) || q(N,j+1,s)) &&
+						(q(N,j,s) || q(N,j,e) || -q(N,j+1,s))
 					)
+				)
 
 Izquierda:
 	paraTodo(i) ((0 < i < N) => 
-					(-q(i,1,s) && -q(i,1,w) && -q(i+1,1,w)) ||
 					(
-						(q(i,1,s) && q(i,1,w)) ||
-						(q(i,1,s) && q(i+1,1,w)) ||
-						(q(i,1,w) && q(i+1,1,w))
+						(-q(i,1,w) || q(i,1,s) || q(i+1,1,w)) &&
+						(q(i,1,w) || -q(i,1,s) || q(i+1,1,w)) &&
+						(q(i,1,w) || q(i,1,s) || -q(i+1,1,w)) 
 					)
+				)
 
 Derecha:
-	paraTodo(i) ((0 < i < N) => 
-					(-q(i,M,e) && -q(i,M,s) && -q(i+1,M,e)) ||
+	paraTodo(i) ((0 < i < N) =>
 					(
-						(q(i,M,e) && q(i,M,s)) ||
-						(q(i+1,M,e) && q(i,M,s)) ||
-						(q(i,M,e) && q(i+1,M,e))
+						(-q(i,M,e) || q(i,M,s) || q(i+1,M,e)) &&
+						(q(i,M,e) || -q(i,M,s) || q(i+1,M,e)) &&
+						(q(i,M,e) || q(i,M,s) || -q(i+1,M,e)) &&
 					)
+				)
 
 	CENTRALES
 

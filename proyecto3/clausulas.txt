@@ -140,10 +140,18 @@ Tipo 5 (Los puntos deben estar bien conectados, con cero o dos incidencias)
 
 	ESQUINAS:
 
+//Superior izquierda
 (-q(1,1,n) && -q(1,1,w)) || (q(1,1,n) && q(1,1,w))
+
+//Superior derecha
 (-q(1,M,n) && -q(1,M,e)) || (q(1,M,n) && q(1,M,e))
+
+//Inferior izquierda
 (-q(N,1,s) && -q(N,1,w)) || (q(N,1,s) && q(N,1,w))
-(-q(N,M,s) && -q(1,1,e)) || (q(N,M,s) && q(N,M,e))
+
+//Inferior derecha
+(-q(N,M,s) && -q(N,M,e)) || (q(N,M,s) && q(N,M,e))
+
 
 	LATERALES:
 

@@ -160,7 +160,7 @@ Superior:
 					(-q(1,j,n) && -q(1,j,e) && -q(1,j+1,n)) ||
 					(
 						(q(1,j,n) && q(1,j,e)) ||
-						(q(1,j+1,n) && q(1,j+1,w)) ||
+						(q(1,j+1,n) && q(1,j,e)) ||
 						(q(1,j,n) && q(1,j+1,n))
 					)
 
@@ -169,7 +169,7 @@ Inferior:
 					(-q(N,j,s) && -q(N,j,e) && -q(N,j+1,s)) ||
 					(
 						(q(N,j,s) && q(N,j,e)) ||
-						(q(N,j+1,s) && q(N,j+1,w)) ||
+						(q(N,j+1,s) && q(N,j,e)) ||
 						(q(N,j,s) && q(N,j+1,s))
 					)
 
@@ -178,7 +178,7 @@ Izquierda:
 					(-q(i,1,s) && -q(i,1,w) && -q(i+1,1,w)) ||
 					(
 						(q(i,1,s) && q(i,1,w)) ||
-						(q(i+1,1,n) && q(i+1,1,w)) ||
+						(q(i,1,s) && q(i+1,1,w)) ||
 						(q(i,1,w) && q(i+1,1,w))
 					)
 
@@ -187,8 +187,8 @@ Derecha:
 					(-q(i,M,e) && -q(i,M,s) && -q(i+1,M,e)) ||
 					(
 						(q(i,M,e) && q(i,M,s)) ||
-						(q(i+1,M,e) && q(i+1,M,n)) ||
-						(q(i+1,M,e) && q(i+1,M,e))
+						(q(i+1,M,e) && q(i,M,s)) ||
+						(q(i,M,e) && q(i+1,M,e))
 					)
 
 	CENTRALES

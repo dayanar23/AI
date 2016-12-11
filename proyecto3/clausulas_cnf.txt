@@ -163,32 +163,32 @@ Tipo 3
 
 //Cuando la de arriba es alcanzable
 
-paraTodo(i,j) ((1 <= i <= N && 1 <= j <= M) =>
-					existe(i',j') ((1 < i' <= N && 1 <= j' <= M) => 
-						c(i'-1,j') && r(c(i,j),c(i',j')) && -q(i',j',n) =>
-							r(c(i',j'),c(i'-1,j'))))
+paraTodo(c(i,j)) ((1 <= i <= N && 1 <= j <= M) =>
+					(
+						-r(c,c') || q(c',n) || r(c, c'')
+					)
 
 
 //Cuando la de la derecha es alcanzable
 
-paraTodo(i,j) ((1 <= i <= N && 1 <= j <= M) =>
-					existe(i',j') ((1 <= i' <= N && 1 <= j' < M) => 
-						c(i',j'+1) && r(c(i,j),c(i',j')) && -q(i',j',e) =>
-							r(c(i',j'),c(i',j'+1))))
+paraTodo(c(i,j)) ((1 <= i <= N && 1 <= j <= M) =>
+					(
+						-r(c,c') || q(c',e) || r(c, c'')
+					)
 
 //Cuando la de abajo es alcanzable
 
-paraTodo(i,j) ((1 <= i <= N && 1 <= j <= M) =>
-					existe(i',j') ((1 <= i' < N && 1 <= j' <= M) => 
-						c(i'+1,j') && r(c(i,j),c(i',j')) && -q(i',j',s) =>
-							r(c(i',j'),c(i'+1,j'))))
+paraTodo(c(i,j)) ((1 <= i <= N && 1 <= j <= M) =>
+					(
+						-r(c,c') || q(c',s) || r(c, c'')
+					)
 
 //Cuando la de la izquierda es alcanzable
 
-paraTodo(i,j) ((1 <= i <= N && 1 <= j <= M) =>
-					existe(i',j') ((1 <= i' <= N && 1 < j' <= M) => 
-						c(i',j'-1) && r(c(i,j),c(i',j')) && -q(i',j',w) =>
-							r(c(i',j'),c(i',j'-1))))
+paraTodo(c(i,j)) ((1 <= i <= N && 1 <= j <= M) =>
+					(
+						-r(c,c') || q(c',o) || r(c, c'')
+					)
 
 ///////////////////////////////////////////////////////////////////////////////////
 

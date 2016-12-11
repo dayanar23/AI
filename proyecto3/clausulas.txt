@@ -49,27 +49,12 @@ paraTodo(i,j) ((1 <= i < N && 1 <= j <= M) =>
 
 Tipo 2
 
-	a es interior,
-	b no es interior,
-	c no es interior <- Como puedo asegurarlo? Si -q(1,j,w) <=> z(1,j) y en este caso
-											   la celda c no tiene segmento a la izquierda
-											   pero es externa (ESTA CONDICION NO LIDIA CON ESO?) 
-
-	a || b | c
-    -----------
-	d || e | f
-	====-------
-	g | h  | i
-
-
-Version Blai
-
 	BORDES (Version Daniel)
 
 paraTodo(j) ((1 <= j <= M) => 
 					-q(1,j,n) <=> z(1,j))
 
-paraTodo(j) ((&& 1 <= j <= M) => 
+paraTodo(j) ((1 <= j <= M) => 
 					-q(N,j,s) <=> z(N,j))					
 
 paraTodo(i) ((1 <= i <= N) => 
@@ -91,8 +76,6 @@ paraTodo(i) ((1 <= i <= N) =>
 
 paraTodo(i) ((1 <= i <= N) => 
 					-q(i,M,n) <=> z(i,M))
-
-	INTERNO (Si no hay un segmento que llegue a la frontera, no sirve)
 
 paraTodo(i,j) (1 < i < N && 1 < j < M) => 
 					z(i,j) <=> [-q(i,j,n) & z(i,j+1)] || 

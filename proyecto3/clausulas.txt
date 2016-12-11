@@ -66,31 +66,31 @@ Version Blai
 
 	BORDES (Version Daniel)
 
-paraTodo(i,j) ((i = 1 && 1 <= j <= M) => 
-					-q(i,j,n) <=> z(i,j))
+paraTodo(j) ((1 <= j <= M) => 
+					-q(1,j,n) <=> z(1,j))
 
-paraTodo(i,j) ((i = N && 1 <= j <= M) => 
-					-q(i,j,s) <=> z(i,j))					
+paraTodo(j) ((&& 1 <= j <= M) => 
+					-q(N,j,s) <=> z(N,j))					
 
-paraTodo(i,j) ((1 <= i <= N && j = 1) => 
-					-q(i,j,w) <=> z(i,j))
+paraTodo(i) ((1 <= i <= N) => 
+					-q(i,1,w) <=> z(i,1))
 
-paraTodo(i,j) ((1 <= i <= N && j = M) => 
-					-q(i,j,e) <=> z(i,j))
+paraTodo(i) ((1 <= i <= N) => 
+					-q(i,M,e) <=> z(i,M))
 
 	BORDES (Version Blai)
 
-paraTodo(i,j) ((i = 1 && 1 <= j <= M) => 
-					-q(i,j,w) <=> z(i,j))
+paraTodo(j) ((1 <= j <= M) => 
+					-q(1,j,w) <=> z(1,j))
 
-paraTodo(i,j) ((i = N && 1 <= j <= M) => 
-					-q(i,j,e) <=> z(i,j))					
+paraTodo(j) ((1 <= j <= M) => 
+					-q(N,j,e) <=> z(N,j))					
 
-paraTodo(i,j) ((1 <= i <= N && j = 1) => 
-					-q(i,j,s) <=> z(i,j))
+paraTodo(i) ((1 <= i <= N) => 
+					-q(i,1,s) <=> z(i,1))
 
-paraTodo(i,j) ((1 <= i <= N && j = M) => 
-					-q(i,j,n) <=> z(i,j))
+paraTodo(i) ((1 <= i <= N) => 
+					-q(i,M,n) <=> z(i,M))
 
 	INTERNO (Si no hay un segmento que llegue a la frontera, no sirve)
 

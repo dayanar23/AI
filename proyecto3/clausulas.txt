@@ -78,7 +78,6 @@ paraTodo(i,j) ((1 <= i <= N && j = 1) =>
 paraTodo(i,j) ((1 <= i <= N && j = M) => 
 					-q(i,j,e) <=> z(i,j))
 
-
 	BORDES (Version Blai)
 
 paraTodo(i,j) ((i = 1 && 1 <= j <= M) => 
@@ -96,10 +95,17 @@ paraTodo(i,j) ((1 <= i <= N && j = M) =>
 	INTERNO (Si no hay un segmento que llegue a la frontera, no sirve)
 
 paraTodo(i,j) (1 < i < N && 1 < j < M) => 
-					z(i,j) <=> [-q(i,j,n) && z(i,j+1)] || 
+					z(i,j) <=> [-q(i,j,n) & z(i,j+1)] || 
 							   [-q(i,j,e) & z(i+1,j)] || 
 							   [-q(i,j,s) & z(i,j-1)] || 
 							   [-q(i,j,w) & z(i-1,j)]
+			)
+
+paraTodo(i,j) (1 < i < N && 1 < j < M) => 
+					-z(i,j) <=> [-q(i,j,n) & -z(i,j+1)] || 
+							    [-q(i,j,e) & -z(i+1,j)] || 
+							    [-q(i,j,s) & -z(i,j-1)] || 
+							    [-q(i,j,w) & -z(i-1,j)]
 			)
 
 
@@ -144,4 +150,59 @@ paraTodo(i,j) ((1 <= i <= N && 1 <= j <= M) =>
 					paraTodo(i',j') ((1 <= i' <= N && 1 <= j' <= M) =>
 						z(i,j) && z(i',j') => r(c(i,j),c(i',j'))
 					)
+				)
+
+///////////////////////////////////////////////////////////////////////////////////
+
+Tipo 5 (Los puntos deben estar bien conectados, con cero o dos incidencias)
+
+	ESQUINAS:
+
+(-q(1,1,n) && -q(1,1,w)) || (q(1,1,n) && q(1,1,w))
+(-q(1,M,n) && -q(1,M,e)) || (q(1,M,n) && q(1,M,e))
+(-q(N,1,s) && -q(N,1,w)) || (q(N,1,s) && q(N,1,w))
+(-q(N,M,s) && -q(1,1,e)) || (q(N,M,s) && q(N,M,e))
+
+	LATERALES:
+
+Superior:
+	paraTodo(j) ((0 < j < M) => 
+					(-q(1,j,n) && -q(1,j,e) && -q(1,j+1,n)) ||
+					(
+						(q(1,j,n) && q(1,j,e)) ||
+						(q(1,j+1,n) && q(1,j+1,w))
+					)
+
+Inferior:
+	paraTodo(j) ((0 < j < M) => 
+					(-q(N,j,n) && -q(N,j,e) && -q(N,j+1,n)) ||
+					(
+						(q(N,j,n) && q(N,j,e)) ||
+						(q(N,j+1,n) && q(N,j+1,w))
+					)
+
+Izquierda:
+	paraTodo(i) ((0 < i < N) => 
+					(-q(i,1,s) && -q(i,1,w) && -q(i+1,1,w)) ||
+					(
+						(q(i,1,s) && q(i,1,w)) ||
+						(q(i+1,1,n) && q(i+1,1,w))
+					)
+
+Derecha:
+	paraTodo(i) ((0 < i < N) => 
+					(-q(i,M,e) && -q(i,M,s) && -q(i+1,M,e)) ||
+					(
+						(q(i,M,e) && q(i,M,s)) ||
+						(q(i+1,M,e) && q(i+1,M,n))
+					)
+
+	CENTRALES
+
+paraTodo(i,j) ((0 < i < N && 0 < j < M) => 
+				(-q(i,j,s) && -q(i,j,e) && -q(i+1,j+1,n) && -q(i+1,j+1,w)) ||
+				(
+					(q(i,j,s) && q(i,j,e)) || (q(i,j,s) && q(i+1,j+1,n)) ||
+					(q(i,j,s) && q(i+1,j+1,w)) || (q(i,j,e) && q(i+1,j+1,n)) ||
+					(q(i,j,e) && q(i+1,j+1,w)) || (q(i+1,j+1,n) && q(i+1,j+1,w))
 				)

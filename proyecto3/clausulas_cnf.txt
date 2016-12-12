@@ -201,7 +201,7 @@ Tipo 5 (Los puntos deben estar bien conectados, con cero o dos incidencias)
 (-q(N,1,s) || q(N,1,w)) && (-q(N,1,w) || q(N,1,s))
 
 //Inferior derecha
-(-q(N,M,s) || q(N,M,e)) && (-q(N,N,e) || q(N,N,w))
+(-q(N,M,s) || q(N,M,e)) && (-q(N,M,e) || q(N,M,w))
 
 
 	LATERALES:

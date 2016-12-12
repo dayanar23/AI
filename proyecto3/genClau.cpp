@@ -14,21 +14,21 @@ int N, M, S, D;
 
 int q(int i, int j, char dir) {
     switch (dir) {
-        case 'n': return (i + (j-1) * N);
-        case 's': return (i + j * N);
-        case 'e': return (i + (j-1) * (M+1) + N * (M+1) + 1);
-        case 'w': return (i + (j-1) * (M+1) + N * (M+1));
+        case 'n': return (j + (i-1) * M);
+        case 's': return (j + i * M);
+        case 'e': return (j + (i-1) * (N+1) + M * (N+1) + 1);
+        case 'w': return (j + (i-1) * (N+1) + M * (N+1));
     }
     return 0;
 }
 
 int z(int i, int j) {
-    return (i + (j-1) * N + S);
+    return (j + (i-1) * M + S);
 }
 
 int r(int i, int j, int i1, int j1) {
-    int auxi = (j-1)* N + i;
-    int auxj = (j1-1)* N + i1;
+    int auxi = (i-1)* M + j;
+    int auxj = (i1-1)* M + j1;
     return ((auxi -1) * D + auxj + D + S);
 }
 
@@ -62,7 +62,7 @@ int main(int argc, const char *argv[]) {
                 Tipo 0
             */
 
-            if(i<N){
+           /* if(i<N){
                 out << "c Tipo 0: \n";
                 out << q(i,j,e) << " " << -q(i+1, j,w) << " 0\n";
                 out << -q(i,j,e) << " " << q(i+1, j, w) << " 0\n";
@@ -74,7 +74,7 @@ int main(int argc, const char *argv[]) {
                 out << q(i,j,n) << " " << -q(i,j+1,s) << " 0\n";
                 out << -q(i,j,n) << " " << q(i, j+1, s) << " 0\n";
                 numC = numC + 2;
-            }
+            } */
 
             /*
                 Tipo1
@@ -228,7 +228,7 @@ int main(int argc, const char *argv[]) {
             Centrales
     */
 
-    for(int i=2; i< N; i++) {
+   /* for(int i=2; i< N; i++) {
         for(int j=2; j< M; j++){
             out << "c Tipo 2: \n";
             out <<  z(i,j) << " " <<  q(i,j,n) << " " << -z(i-1,j) << " 0\n";
@@ -245,7 +245,7 @@ int main(int argc, const char *argv[]) {
             out << -z(i,j) << " " <<  z(i,j-1) << " 0\n";
             numC = numC + 12;
         } 
-    }
+    }*/
             
 
     /*

@@ -87,7 +87,7 @@ paraTodo(j) ((1 <= j <= M) =>
 paraTodo(j) ((1 <= j <= M) => 
 					(
 						(q(N,j,s) || z(N,j)) &&
-						(-q(N,j,n) || -z(N,j))
+						(-q(N,j,s) || -z(N,j))
 					)
 				)
 

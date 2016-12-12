@@ -50,9 +50,11 @@ int main(int argc, const char *argv[]) {
     char s = 's';
     char w = 'w';
 
-    for (int i = 1; i <= N; i++) {
+    /*  
+            Tipo 1, 2 y 3
+    */
 
-       
+    for (int i = 1; i <= N; i++) {       
         for (int j = 1; j <= M; j++) {
             in >> cell;
 
@@ -188,22 +190,43 @@ int main(int argc, const char *argv[]) {
         out <<  q(i,M,e) << " " <<  z(i,M) << " 0\n";
         out << -q(i,M,e) << " " << -z(i,M) << " 0\n";
         numC = numC + 2;
-
     }
     
     /*  
             Tipo 2
     */
 
+    /*  
+            Horizontales
+    */
+
     for(int j=1; j<= M; j++){
         out << "c Tipo 2: \n";
-        out <<  q(1,j,n) << " " << -z(1,j) << " 0\n";
-        out << -q(1,j,n) << " " <<  z(1,j) << " 0\n";
+        out <<  q(1,j,n) << " " << z(1,j) << " 0\n";
+        out << -q(1,j,n) << " " <<  -z(1,j) << " 0\n";
         numC = numC + 2;
         out <<  q(N,j,s) << " " <<  z(N,j) << " 0\n";
-        out << -q(N,j,n) << " " << -z(N,j) << " 0\n";
+        out << -q(N,j,s) << " " << -z(N,j) << " 0\n";
         numC = numC + 2;
     }
+
+    /*  
+            Verticales
+    */
+
+    for(int i=1; i<= N; i++){
+        out << "c Tipo 2: \n";
+        out <<  q(i,1,w) << " " << z(i,1) << " 0\n";
+        out << -q(i,1,w) << " " <<  -z(i,1) << " 0\n";
+        numC = numC + 2;
+        out <<  q(i,M,e) << " " <<  z(i,M) << " 0\n";
+        out << -q(i,M,e) << " " << -z(i,M) << " 0\n";
+        numC = numC + 2;
+    }
+
+    /*  
+            Centrales
+    */
 
     for(int i=2; i< N; i++) {
         for(int j=2; j< M; j++){
@@ -228,20 +251,27 @@ int main(int argc, const char *argv[]) {
     /*
         Tipo 5 
    */ 
-   
+
+    /*  
+            Esquinas
+    */
 
     out << "c Tipo 5: \n";
-    /*out << -q(1,1,n) << " " << q(1,1,w) << " 0\n";
+    out << -q(1,1,n) << " " << q(1,1,w) << " 0\n";
     out << -q(1,1,w) << " " << q(1,1,n) << " 0\n";
     out << -q(1,M,n) << " " << q(1,M,e) << " 0\n";
     out << -q(1,M,e) << " " << q(1,M,n) << " 0\n";
     out << -q(N,1,s) << " " << q(N,1,w) << " 0\n";
     out << -q(N,1,w) << " " << q(N,1,s) << " 0\n";
     out << -q(N,M,s) << " " << q(N,M,e) << " 0\n";
-    out << -q(N,M,e) << " " << q(N,M,s) << " 0\n";*/
+    out << -q(N,M,e) << " " << q(N,M,s) << " 0\n";
     
     numC = numC + 8; 
     
+    /*  
+            Horizontales
+    */
+
     for (int j = 2; j < M; j++ ) {
         out << -q(1,j,n) << " " <<  q(1,j,e) << " " <<  q(1,j+1,n) << " 0\n";  
         out <<  q(1,j,n) << " " << -q(1,j,e) << " " <<  q(1,j+1,n) << " 0\n"; 
@@ -252,6 +282,11 @@ int main(int argc, const char *argv[]) {
         numC = numC + 6;
     }
 
+
+    /*  
+            Verticales
+    */
+
     for (int i = 2; i < N; i++ ){
         out << -q(i,M,e) << " " <<  q(i,M,s) << " " <<  q(i+1,M,e) << " 0\n";
         out <<  q(i,M,e) << " " << -q(i,M,s) << " " <<  q(i+1,M,e) << " 0\n";
@@ -261,6 +296,10 @@ int main(int argc, const char *argv[]) {
         out <<  q(i,1,w) << " " <<  q(i,1,s) << " " << -q(i+1,1,w) << " 0\n";
         numC = numC + 6;
     }
+
+    /*  
+            Centrales
+    */
 
     for (int i = 2; i < N; i++ ){
         for (int j = 2; j < M; j++ ) {

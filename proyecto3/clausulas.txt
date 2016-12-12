@@ -87,10 +87,10 @@ paraTodo(i,j) (1 < i < N && 1 < j < M) =>
 			)
 
 paraTodo(i,j) (1 < i < N && 1 < j < M) => 
-					-z(i,j) <=> [-q(i,j,n) & -z(i,j+1)] || 
-							    [-q(i,j,s) & -z(i,j-1)] || 
-							    [-q(i,j,e) & -z(i+1,j)] || 
-							    [-q(i,j,w) & -z(i-1,j)]
+					-z(i,j) <=> [-q(i,j,n) & -z(i-1,j)] || 
+							    [-q(i,j,s) & -z(i+1,j)] || 
+							    [-q(i,j,e) & -z(i,j+1)] || 
+							    [-q(i,j,w) & -z(i,j-1)]
 			)
 
 

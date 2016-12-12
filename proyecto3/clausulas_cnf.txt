@@ -110,18 +110,18 @@ paraTodo(i) ((1 <= i <= N) =>
 
 paraTodo(i,j) (1 < i < N && 1 < j < M) => 
 					(
+						(-q(i,j,e) || -q(i,j,w)) &&
+						(z(i,j+1) || -q(i,j,w)) &&
+						(-q(i,j,e) || z(i,j-1)) &&
+						(z(i,j+1) || z(i,j-1)) &&
+						(-z(i,j) || -q(i,j,n) || -q(i,j,s)) &&
+						(-z(i,j) || z(i-1,j) || -q(i,j,s)) &&
+						(-z(i,j) || -q(i,j,n) || z(i+1,j)) &&
+						(-z(i,j) || z(i-1,j) || z(i+1,j)) &&
 						(z(i,j) || q(i,j,n) || -z(i-1,j)) &&
 						(z(i,j) || q(i,j,s) || -z(i+1,j)) &&
 						(z(i,j) || q(i,j,e) || -z(i,j+1)) &&
-						(z(i,j) || q(i,j,w) || -z(i,j-1)) &&
-						(-z(i,j) || -q(i,j,n)) && 
-						(-z(i,j) || z(i-1,j)) &&
-						(-z(i,j) || -q(i,j,s)) && 
-						(-z(i,j) || z(i+1,j)) &&
-						(-z(i,j) || -q(i,j,e)) && 
-						(-z(i,j) || z(i,j+1)) &&
-						(-z(i,j) || -q(i,j,w)) && 
-						(-z(i,j) || z(i,j-1))
+						(z(i,j) || q(i,j,w) || -z(i,j-1))
 					)
 			)
 

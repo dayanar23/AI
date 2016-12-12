@@ -62,19 +62,19 @@ int main(int argc, const char *argv[]) {
                 Tipo 0
             */
 
-           /* if(i<N){
+            if(i<N){
                 out << "c Tipo 0: \n";
-                out << q(i,j,e) << " " << -q(i+1, j,w) << " 0\n";
-                out << -q(i,j,e) << " " << q(i+1, j, w) << " 0\n";
+                out << q(i,j,s) << " " << -q(i+1, j,n) << " 0\n";
+                out << -q(i,j,s) << " " << q(i+1, j, n) << " 0\n";
                 numC = numC + 2;
             }
 
             if(j<M){
                 out << "c Tipo 0: \n";
-                out << q(i,j,n) << " " << -q(i,j+1,s) << " 0\n";
-                out << -q(i,j,n) << " " << q(i, j+1, s) << " 0\n";
+                out << q(i,j,e) << " " << -q(i,j+1,w) << " 0\n";
+                out << -q(i,j,e) << " " << q(i, j+1, w) << " 0\n";
                 numC = numC + 2;
-            } */
+            } 
 
             /*
                 Tipo1
@@ -120,19 +120,8 @@ int main(int argc, const char *argv[]) {
                     break;
                 case '3':
                 out << " caso 3: ";
-                        out << q(i,j,n) << " " << q(i,j,s) << " 0\n";
-                        out << q(i,j,n) << " " << q(i,j,e) << " 0\n";
-                        out << q(i,j,n) << " " << q(i,j,w) << " 0\n";
-                        out << q(i,j,s) << " " << q(i,j,n) << " 0\n";
-                        out << q(i,j,s) << " " << q(i,j,e) << " 0\n";
-                        out << q(i,j,n) << " " << q(i,j,w) << " 0\n";
-                        out << q(i,j,e) << " " << q(i,j,n) << " 0\n";
-                        out << q(i,j,e) << " " << q(i,j,s) << " 0\n";
-                        out << q(i,j,e) << " " << q(i,j,w) << " 0\n";
-                        out << q(i,j,w) << " " << q(i,j,n) << " 0\n";
-                        out << q(i,j,w) << " " << q(i,j,s) << " 0\n";
-                        out << q(i,j,w) << " " << q(i,j,e) << " 0\n";
-                        numC = numC + 12;
+                        out << -q(i,j,n) << " " << -q(i,j,s) << " " << -q(i,j,e) << " " << -q(i,j,w) << " 0\n";
+                        numC = numC + 1;
                     break;
                 case '4':
                 out << " caso 4: ";
@@ -178,18 +167,6 @@ int main(int argc, const char *argv[]) {
                 }
             }
         }  
-
-        /*
-            Tipo 2
-        */
-
-        out << "c Tipo 2: \n";
-        out <<  q(i,1,w) << " " <<  z(i,1) << " 0\n";
-        out << -q(i,1,w) << " " << -z(i,1) << " 0\n";
-        numC = numC + 2;
-        out <<  q(i,M,e) << " " <<  z(i,M) << " 0\n";
-        out << -q(i,M,e) << " " << -z(i,M) << " 0\n";
-        numC = numC + 2;
     }
     
     /*  
@@ -228,25 +205,25 @@ int main(int argc, const char *argv[]) {
             Centrales
     */
 
-   /* for(int i=2; i< N; i++) {
+    for(int i=2; i< N; i++) {
         for(int j=2; j< M; j++){
             out << "c Tipo 2: \n";
-            out <<  z(i,j) << " " <<  q(i,j,n) << " " << -z(i-1,j) << " 0\n";
-            out <<  z(i,j) << " " <<  q(i,j,s) << " " << -z(i+1,j) << " 0\n";
-            out <<  z(i,j) << " " <<  q(i,j,e) << " " << -z(i,j+1) << " 0\n";
-            out <<  z(i,j) << " " <<  q(i,j,w) << " " << -z(i,j-1) << " 0\n";
-            out << -z(i,j) << " " << -q(i,j,n) << " 0\n";
-            out << -z(i,j) << " " <<  z(i-1,j) << " 0\n";
-            out << -z(i,j) << " " << -q(i,j,s) << " 0\n";
-            out << -z(i,j) << " " <<  z(i+1,j) << " 0\n";
-            out << -z(i,j) << " " << -q(i,j,e) << " 0\n";
-            out << -z(i,j) << " " <<  z(i,j+1) << " 0\n";
-            out << -z(i,j) << " " << -q(i,j,w) << " 0\n";
-            out << -z(i,j) << " " <<  z(i,j-1) << " 0\n";
+            out << -q(i,j,e) << " " << -q(i,j,w) << " 0\n";
+            out << z(i,j+1) << " " << -q(i,j,w) << " 0\n";
+            out << -q(i,j,e) << " " << z(i,j-1) << " 0\n";
+            out << z(i,j+1) << " " << z(i,j-1) << " 0\n";
+            out << -z(i,j) << " " << -q(i,j,n) << " " << -q(i,j,s) << " 0\n";
+            out << -z(i,j) << " " << z(i-1,j) << " " << -q(i,j,s) << " 0\n";
+            out << -z(i,j) << " " << -q(i,j,n) << " " << z(i+1,j) << " 0\n";
+            out << -z(i,j) << " " << z(i-1,j) << " " << z(i+1,j) << " 0\n";
+            out << z(i,j) << " " << q(i,j,n) << " " << -z(i-1,j) << " 0\n";
+            out << z(i,j) << " " << q(i,j,s) << " " << -z(i+1,j) << " 0\n";
+            out << z(i,j) << " " << q(i,j,e) << " " << -z(i,j+1) << " 0\n";
+            out << z(i,j) << " " << q(i,j,w) << " " << -z(i,j-1) << " 0\n";
+
             numC = numC + 12;
         } 
-    }*/
-            
+    }   
 
     /*
         Tipo 5 

@@ -80,14 +80,15 @@ int main(int argc, const char *argv[]) {
 
             switch (cell) {
                 case '0':
-                        out << -q(i,j,n) + " 0\n";
-                        out << -q(i,j,e) + " 0\n";
-                        out << -q(i,j,s) + " 0\n";
-                        out << -q(i,j,w) + " 0\n";
+                        out << -q(i,j,n) << " 0\n";
+                        out << -q(i,j,e) << " 0\n";
+                        out << -q(i,j,s) << " 0\n";
+                        out << -q(i,j,w) << " 0\n";
                         numC = numC + 4;
                     break;
 
                 case '1':
+                out << " caso 1: ";
                         out <<  q(i,j,n) << " " << q(i,j,s) << " " << q(i,j,e) << " " << q(i,j,w) << " 0\n";
                         out << -q(i,j,n) << " " << -q(i,j,s) << " 0\n";
                         out << -q(i,j,n) << " " << -q(i,j,e) << " 0\n";
@@ -98,6 +99,7 @@ int main(int argc, const char *argv[]) {
                         numC = numC + 7;
                     break;
                 case '2': 
+                out << " caso 2: ";
                         out << q(i,j,n) << " " << q(i,j,e) << " " << q(i,j,s) << " 0\n";
                         out << q(i,j,n) << " " << q(i,j,e) << " " << q(i,j,w) << " 0\n";
                         out << q(i,j,n) << " " << q(i,j,s) << " " << q(i,j,e) << " 0\n";
@@ -113,6 +115,7 @@ int main(int argc, const char *argv[]) {
                         numC = numC + 12;
                     break;
                 case '3':
+                out << " caso 3: ";
                         out << q(i,j,n) << " " << q(i,j,s) << " 0\n";
                         out << q(i,j,n) << " " << q(i,j,e) << " 0\n";
                         out << q(i,j,n) << " " << q(i,j,w) << " 0\n";
@@ -128,6 +131,7 @@ int main(int argc, const char *argv[]) {
                         numC = numC + 12;
                     break;
                 case '4':
+                out << " caso 4: ";
                         out <<  q(i,j,n) << " 0\n";
                         out <<  q(i,j,s) << " 0\n";
                         out <<  q(i,j,e) << " 0\n";
@@ -141,7 +145,6 @@ int main(int argc, const char *argv[]) {
             */
 
             out << "c Tipo 2: \n";
-
             if (cell == '4'){
                 out <<  -q(i,j,n) << " " << -q(i,j,s) << " " << -q(i,j,e) << " " << -z(1,j) << " 0\n";
                 numC = numC + 1;
@@ -199,9 +202,7 @@ int main(int argc, const char *argv[]) {
             */
 
             out << "c Tipo 3: \n";
-
             out << r(i,j,i,j) << " 0\n";
-
             for (int i1 = 1; i1 <= N; i1++) {
                 for (int j1 = 1; j1 <= M; j1++) {
                     if (i1 - 1 > 1) {
@@ -228,7 +229,6 @@ int main(int argc, const char *argv[]) {
             */
 
             out << "c Tipo 4: \n";
-
             for (int i1 = 1; i1 <= N; i1++) {
                 for (int j1 = 1; j1 <= M; j1++) {
                     out << -z(i,j) << " " << -z(i1,j1) << " " << r(i,j,i1,j1) << " 0\n";

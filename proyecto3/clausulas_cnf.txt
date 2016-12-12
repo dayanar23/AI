@@ -38,7 +38,6 @@ paraTodo(i,j) ((1 <= i < N && 1 <= j <= M) =>
 				)
 
 n=2
-//SIMPLIFICADO SIN PARENTESIS
 paraTodo(i,j) ((1 <= i < N && 1 <= j <= M) => 
 					(
 						(q(i,j,n) || q(i,j,e) || q(i,j,s)) && 
@@ -48,111 +47,12 @@ paraTodo(i,j) ((1 <= i < N && 1 <= j <= M) =>
 					)
 				)
 
-//SIMPLIFICADO
-paraTodo(i,j) ((1 <= i < N && 1 <= j <= M) => 
-					(
-						(
-							(q(i,j,n) || q(i,j,e) || q(i,j,s)) && 
-							(q(i,j,n) || q(i,j,e) || q(i,j,w))
-						) &&
-						(
-							(q(i,j,e) || q(i,j,s) || q(i,j,w)) && 
-							(q(i,j,n) || q(i,j,s) || q(i,j,w))
-						)
-					)
-				)
-
-//Sin SIMPLIFICAR
-paraTodo(i,j) ((1 <= i < N && 1 <= j <= M) => 
-					(
-						(
-							(q(i,j,n) || q(i,j,e) || q(i,j,s)) && 
-							(q(i,j,n) || q(i,j,e) || q(i,j,w))
-						) &&
-						(
-							(q(i,j,n) || q(i,j,s) || q(i,j,e)) && 
-							(q(i,j,n) || q(i,j,s) || q(i,j,w))
-						) &&
-						(
-							(q(i,j,n) || q(i,j,w) || q(i,j,s)) && 
-							(q(i,j,n) || q(i,j,w) || q(i,j,e))
-						) &&
-						(
-							(q(i,j,e) || q(i,j,s) || q(i,j,n)) && 
-							(q(i,j,e) || q(i,j,s) || q(i,j,w))
-						) &&
-						(
-							(q(i,j,e) || q(i,j,w) || q(i,j,n)) && 
-							(q(i,j,e) || q(i,j,w) || q(i,j,s))
-						) &&
-						(
-							(q(i,j,s) || q(i,j,w) || q(i,j,n)) && 
-							(q(i,j,s) || q(i,j,w) || q(i,j,e))
-						)
-					)
-				)
-
 n = 3
-//SIMPLIFICADO SIN PARENTESIS
 paraTodo(i,j) ((1 <= i < N && 1 <= j <= M) => 
 					(
-							(q(i,j,n) || q(i,j,s)) && 
-							(q(i,j,s) || q(i,j,w)) &&
-							(q(i,j,n) || q(i,j,e)) && 
-							(q(i,j,s) || q(i,j,e)) &&
-							(q(i,j,n) || q(i,j,w)) &&
-							(q(i,j,w) || q(i,j,e))
+						(-q(i,j,n) || -q(i,j,s) || -q(i,j,e) || -q(i,j,w))
 					)
 				)
-
-//SIMPLIFICADO
-paraTodo(i,j) ((1 <= i < N && 1 <= j <= M) => 
-					(
-						(
-							(q(i,j,n) || q(i,j,s)) && 
-							(q(i,j,s) || q(i,j,w))
-						) &&
-						(
-							(q(i,j,n) || q(i,j,e)) && 
-							(q(i,j,s) || q(i,j,e))
-						) &&
-						(
-							(q(i,j,n) || q(i,j,w))
-						) &&
-						(
-							(q(i,j,w) || q(i,j,e))
-						)
-					)
-				)			
-
-
-
-//Sin SIMPLIFICAR
-paraTodo(i,j) ((1 <= i < N && 1 <= j <= M) => 
-					(
-						(
-							(q(i,j,n) || q(i,j,s)) && 
-							(q(i,j,n) || q(i,j,e)) && 
-							(q(i,j,n) || q(i,j,w)) &&
-						) &&
-						(
-							(q(i,j,s) || q(i,j,n)) && 
-							(q(i,j,s) || q(i,j,e)) && 
-							(q(i,j,n) || q(i,j,w))
-						) &&
-						(
-							(q(i,j,e) || q(i,j,n)) && 
-							(q(i,j,e) || q(i,j,s)) && 
-							(q(i,j,e) || q(i,j,w))
-						) &&
-						(
-							(q(i,j,w) || q(i,j,n)) && 
-							(q(i,j,w) || q(i,j,s)) && 
-							(q(i,j,w) || q(i,j,e))
-						)
-					)
-				)			
-
 
 n = 4 //Si tiene 4, esa celda es interior de una
 paraTodo(i,j) ((1 <= i < N && 1 <= j <= M) => 
@@ -178,10 +78,8 @@ paraTodo(i,j) ((1 <= i <= N && 1 <= j <= M) =>
 //Primera fila
 paraTodo(j) ((1 <= j <= M) => 
 					(
-						(
-							(q(1,j,n) || z(1,j))) &&
-							(-q(1,j,n) || -z(1,j))
-						)
+						(q(1,j,n) || z(1,j))) &&
+						(-q(1,j,n) || -z(1,j))
 					)
 				)
 
@@ -212,18 +110,18 @@ paraTodo(i) ((1 <= i <= N) =>
 
 paraTodo(i,j) (1 < i < N && 1 < j < M) => 
 					(
-						(z(i,j) || q(i,j,n) || -z(i,j+1)) &&
-						(z(i,j) || q(i,j,s) || -z(i,j-1)) &&
-						(z(i,j) || q(i,j,e) || -z(i+1,j)) &&
-						(z(i,j) || q(i,j,w) || -z(i-1,j)) &&
+						(z(i,j) || q(i,j,n) || -z(i-1,j)) &&
+						(z(i,j) || q(i,j,s) || -z(i+1,j)) &&
+						(z(i,j) || q(i,j,e) || -z(i,j+1)) &&
+						(z(i,j) || q(i,j,w) || -z(i,j-1)) &&
 						(-z(i,j) || -q(i,j,n)) && 
-						(-z(i,j) || z(i,j+1)) &&
+						(-z(i,j) || z(i-1,j)) &&
 						(-z(i,j) || -q(i,j,s)) && 
-						(-z(i,j) || z(i,j-1)) &&
-						(-z(i,j) || -q(i,j,e)) && 
 						(-z(i,j) || z(i+1,j)) &&
+						(-z(i,j) || -q(i,j,e)) && 
+						(-z(i,j) || z(i,j+1)) &&
 						(-z(i,j) || -q(i,j,w)) && 
-						(-z(i,j) || z(i-1,j))
+						(-z(i,j) || z(i,j-1))
 					)
 			)
 

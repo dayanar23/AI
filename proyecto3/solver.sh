@@ -6,5 +6,4 @@ do
 
 	./genClau init.txt
 
-	# minisat aqui
-	minisat
+	

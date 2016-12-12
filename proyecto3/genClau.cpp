@@ -220,20 +220,7 @@ int main(int argc, const char *argv[]) {
             out << -z(i,j) << " " <<  z(i,j+1) << " 0\n";
             out << -z(i,j) << " " << -q(i,j,w) << " 0\n";
             out << -z(i,j) << " " <<  z(i,j-1) << " 0\n";
-            
-            out << -z(i,j) << " " << q(i,j,n) << " " << z(i-1,j) << " 0\n";
-            out << -z(i,j) << " " << q(i,j,s) << " " << z(i+1,j) << " 0\n";
-            out << -z(i,j) << " " << q(i,j,e) << " " << z(i,j+1) << " 0\n";
-            out << -z(i,j) << " " << q(i,j,w) << " " << z(i,j-1) << " 0\n";
-            out <<  z(i,j) << " " << -q(i,j,n) << " 0\n";
-            out <<  z(i,j) << " " << -z(i-1,j) << " 0\n";
-            out <<  z(i,j) << " " << -q(i,j,s) << " 0\n";
-            out <<  z(i,j) << " " << -z(i+1,j) << " 0\n";
-            out <<  z(i,j) << " " << -q(i,j,e) << " 0\n";
-            out <<  z(i,j) << " " << -z(i,j+1) << " 0\n";
-            out <<  z(i,j) << " " << -q(i,j,w) << " 0\n";
-            out <<  z(i,j) << " " << -z(i,j-1) << " 0\n";
-            numC = numC + 24;
+            numC = numC + 12;
         } 
     }
             

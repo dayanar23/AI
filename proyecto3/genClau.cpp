@@ -52,13 +52,7 @@ int main(int argc, const char *argv[]) {
 
     for (int i = 1; i <= N; i++) {
 
-        out <<  q(i,1,w) << " " <<  z(i,1) << " 0\n";
-        out << -q(i,1,w) << " " << -z(i,1) << " 0\n";
-        numC = numC + 2;
-        out <<  q(i,M,e) << " " <<  z(i,M) << " 0\n";
-        out << -q(i,M,e) << " " << -z(i,M) << " 0\n";
-        numC = numC + 2;
-
+       
         for (int j = 1; j <= M; j++) {
             in >> cell;
 
@@ -181,43 +175,28 @@ int main(int argc, const char *argv[]) {
                     numC = numC + 1;
                 }
             }
-
-            /*
-                Tipo 2
-            */
-
-            /*out << "c Tipo 2: \n";
-            if (cell == '4'){
-                out <<  -q(i,j,n) << " " << -q(i,j,s) << " " << -q(i,j,e) << " " << -z(1,j) << " 0\n";
-                numC = numC + 1;
-            }
-            if (i == 1) {
-                out <<  q(1,j,n) << " " << -z(1,j) << " 0\n";
-                out << -q(1,j,n) << " " <<  z(1,j) << " 0\n";
-                numC = numC + 2;
-            }
-            else if (i == N) {
-                out <<  q(N,j,s) << " " <<  z(N,j) << " 0\n";
-                out << -q(N,j,n) << " " << -z(N,j) << " 0\n";
-                numC = numC + 2;
-            }
-            else if (j == 1) {
-                out <<  q(i,1,w) << " " <<  z(i,1) << " 0\n";
-                out << -q(i,1,w) << " " << -z(i,1) << " 0\n";
-                numC = numC + 2;
-            }
-            else if (j == M) {
-                out <<  q(i,M,e) << " " <<  z(i,M) << " 0\n";
-                out << -q(i,M,e) << " " << -z(i,M) << " 0\n";
-                numC = numC + 2;
-            } */
         }  
+
+        /*
+            Tipo 2
+        */
+
+        out << "c Tipo 2: \n";
+        out <<  q(i,1,w) << " " <<  z(i,1) << " 0\n";
+        out << -q(i,1,w) << " " << -z(i,1) << " 0\n";
+        numC = numC + 2;
+        out <<  q(i,M,e) << " " <<  z(i,M) << " 0\n";
+        out << -q(i,M,e) << " " << -z(i,M) << " 0\n";
+        numC = numC + 2;
+
     }
     
-    /* tipo 2
+    /*  
+            Tipo 2
     */
 
     for(int j=1; j<= M; j++){
+        out << "c Tipo 2: \n";
         out <<  q(1,j,n) << " " << -z(1,j) << " 0\n";
         out << -q(1,j,n) << " " <<  z(1,j) << " 0\n";
         numC = numC + 2;
@@ -228,49 +207,62 @@ int main(int argc, const char *argv[]) {
 
     for(int i=2; i< N; i++) {
         for(int j=2; j< M; j++){
-                out <<  z(i,j) << " " <<  q(i,j,n) << " " << -z(i-1,j) << " 0\n";
-                out <<  z(i,j) << " " <<  q(i,j,s) << " " << -z(i+1,j) << " 0\n";
-                out <<  z(i,j) << " " <<  q(i,j,e) << " " << -z(i+1,j) << " 0\n";
-                out <<  z(i,j) << " " <<  q(i,j,w) << " " << -z(i,j-1) << " 0\n";
-                out << -z(i,j) << " " << -q(i,j,n) << " 0\n";
-                out << -z(i,j) << " " <<  z(i-1,j) << " 0\n";
-                out << -z(i,j) << " " << -q(i,j,s) << " 0\n";
-                out << -z(i,j) << " " <<  z(i+1,j) << " 0\n";
-                out << -z(i,j) << " " << -q(i,j,e) << " 0\n";
-                out << -z(i,j) << " " <<  z(i,j+1) << " 0\n";
-                out << -z(i,j) << " " << -q(i,j,w) << " 0\n";
-                out << -z(i,j) << " " <<  z(i,j-1) << " 0\n";
-                numC = numC + 12;
-            } 
-        }
+            out << "c Tipo 2: \n";
+            out <<  z(i,j) << " " <<  q(i,j,n) << " " << -z(i-1,j) << " 0\n";
+            out <<  z(i,j) << " " <<  q(i,j,s) << " " << -z(i+1,j) << " 0\n";
+            out <<  z(i,j) << " " <<  q(i,j,e) << " " << -z(i,j+1) << " 0\n";
+            out <<  z(i,j) << " " <<  q(i,j,w) << " " << -z(i,j-1) << " 0\n";
+            out << -z(i,j) << " " << -q(i,j,n) << " 0\n";
+            out << -z(i,j) << " " <<  z(i-1,j) << " 0\n";
+            out << -z(i,j) << " " << -q(i,j,s) << " 0\n";
+            out << -z(i,j) << " " <<  z(i+1,j) << " 0\n";
+            out << -z(i,j) << " " << -q(i,j,e) << " 0\n";
+            out << -z(i,j) << " " <<  z(i,j+1) << " 0\n";
+            out << -z(i,j) << " " << -q(i,j,w) << " 0\n";
+            out << -z(i,j) << " " <<  z(i,j-1) << " 0\n";
+            
+            out << -z(i,j) << " " << q(i,j,n) << " " << z(i-1,j) << " 0\n";
+            out << -z(i,j) << " " << q(i,j,s) << " " << z(i+1,j) << " 0\n";
+            out << -z(i,j) << " " << q(i,j,e) << " " << z(i,j+1) << " 0\n";
+            out << -z(i,j) << " " << q(i,j,w) << " " << z(i,j-1) << " 0\n";
+            out <<  z(i,j) << " " << -q(i,j,n) << " 0\n";
+            out <<  z(i,j) << " " << -z(i-1,j) << " 0\n";
+            out <<  z(i,j) << " " << -q(i,j,s) << " 0\n";
+            out <<  z(i,j) << " " << -z(i+1,j) << " 0\n";
+            out <<  z(i,j) << " " << -q(i,j,e) << " 0\n";
+            out <<  z(i,j) << " " << -z(i,j+1) << " 0\n";
+            out <<  z(i,j) << " " << -q(i,j,w) << " 0\n";
+            out <<  z(i,j) << " " << -z(i,j-1) << " 0\n";
+            numC = numC + 24;
+        } 
+    }
             
 
     /*
         Tipo 5 
-    
+   */ 
    
 
     out << "c Tipo 5: \n";
-    out << -q(1,1,n) << " " << q(1,1,w) << " 0\n";
+    /*out << -q(1,1,n) << " " << q(1,1,w) << " 0\n";
     out << -q(1,1,w) << " " << q(1,1,n) << " 0\n";
     out << -q(1,M,n) << " " << q(1,M,e) << " 0\n";
     out << -q(1,M,e) << " " << q(1,M,n) << " 0\n";
     out << -q(N,1,s) << " " << q(N,1,w) << " 0\n";
     out << -q(N,1,w) << " " << q(N,1,s) << " 0\n";
     out << -q(N,M,s) << " " << q(N,M,e) << " 0\n";
-    out << -q(N,M,e) << " " << q(N,M,w) << " 0\n";
+    out << -q(N,M,e) << " " << q(N,M,s) << " 0\n";*/
     
     numC = numC + 8; 
-    */
-        
+    
     for (int j = 2; j < M; j++ ) {
-         out << -q(1,j,n) << " " <<  q(1,j,e) << " " <<  q(1,j+1,n) << " 0\n";  
-         out <<  q(1,j,n) << " " << -q(1,j,e) << " " <<  q(1,j+1,n) << " 0\n"; 
-         out <<  q(1,j,n) << " " <<  q(1,j,e) << " " << -q(1,j+1,n) << " 0\n";
-         out << -q(N,j,s) << " " <<  q(N,j,e) << " " <<  q(N,j+1,s) << " 0\n";
-         out <<  q(N,j,s) << " " << -q(N,j,e) << " " <<  q(N,j+1,s) << " 0\n";
-         out <<  q(N,j,s) << " " <<  q(N,j,e) << " " << -q(N,j+1,s) << " 0\n";
-         numC = numC + 6;
+        out << -q(1,j,n) << " " <<  q(1,j,e) << " " <<  q(1,j+1,n) << " 0\n";  
+        out <<  q(1,j,n) << " " << -q(1,j,e) << " " <<  q(1,j+1,n) << " 0\n"; 
+        out <<  q(1,j,n) << " " <<  q(1,j,e) << " " << -q(1,j+1,n) << " 0\n";
+        out << -q(N,j,s) << " " <<  q(N,j,e) << " " <<  q(N,j+1,s) << " 0\n";
+        out <<  q(N,j,s) << " " << -q(N,j,e) << " " <<  q(N,j+1,s) << " 0\n";
+        out <<  q(N,j,s) << " " <<  q(N,j,e) << " " << -q(N,j+1,s) << " 0\n";
+        numC = numC + 6;
     }
 
     for (int i = 2; i < N; i++ ){
